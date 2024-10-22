@@ -15,7 +15,7 @@
 ---
 
 ## Project Overview
-**Debug Dynasty** is building a **JIRA-like Ticketing System** that facilitates efficient task and issue management for software projects. Our system enables project managers and team members to create, assign, track, and resolve tickets, while promoting collaboration through comments and attachments. The project focuses on delivering a user-friendly task management workflow to handle software project issues.
+We have created a **JIRA-like Ticketing System** that facilitates efficient task and issue management for software projects. Our system enables project managers and team members to create, assign, track, and resolve tickets, while promoting collaboration through comments and attachments. The project focuses on delivering a user-friendly task management workflow to handle software project issues.
 
 ---
 
@@ -85,6 +85,10 @@
 ---
 
 ## Future Enhancements
+- **Activity Log:** Track user actions like ticket creation, updates, and comments.
+- **Email Notifications:** Send email notifications when a ticket is assigned or updated.
+- **Sprint Management:** Group tickets into sprints for time-based tracking.
+- **Tagging System:** Allow users to add tags to tickets for better categorization.
 
 ---
 
