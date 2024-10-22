@@ -81,6 +81,53 @@ We have created a **JIRA-like Ticketing System** that facilitates efficient task
 
 ## Database Schema
 
+**Roles Table:** Stores user roles for task management purposes.
+| Column Name | Data Type    | Description                    |
+|-------------|--------------|--------------------------------|
+| role_id     | Primary Key  | Unique identifier for each role |
+| role        | VARCHAR      | Name of the role                |
+
+**Users Table:** Stores information about users, including their credentials and roles.
+| Column Name   | Data Type    | Description                           |
+|---------------|--------------|---------------------------------------|
+| user_id       | Primary Key  | Unique identifier for each user       |
+| username      | VARCHAR      | Username of the user                  |
+| email         | VARCHAR      | Email address of the user             |
+| password_hash | VARCHAR      | Hashed password for security         |
+| role_id       | Foreign Key  | References `Roles.role_id`            |
+| created_at    | TIMESTAMP    | Timestamp of when the user was created |
+
+**Tickets Table:** Stores details about the tickets/issues in the system.
+| Column Name  | Data Type    | Description                                        |
+|--------------|--------------|----------------------------------------------------|
+| ticket_id    | Primary Key  | Unique identifier for each ticket                  |
+| title        | VARCHAR(255) | Title of the ticket                                |
+| description  | TEXT         | Detailed description of the ticket                 |
+| priority     | ENUM         | Priority level (e.g., Low, Medium, High, Critical) |
+| status       | ENUM         | Current status (e.g., Open, In Progress, Resolved, Closed) |
+| assignee_id  | Foreign Key  | References `Users.user_id`                         |
+| reporter_id  | Foreign Key  | References `Users.user_id`                         |
+| due_date     | DATE         | Due date for the ticket                            |
+| created_at   | TIMESTAMP    | Timestamp when the ticket was created              |
+| updated_at   | TIMESTAMP    | Timestamp of the last ticket update                |
+
+**Comments Table:** Stores comments added to tickets for collaboration purposes.
+| Column Name  | Data Type    | Description                            |
+|--------------|--------------|----------------------------------------|
+| comment_id   | Primary Key  | Unique identifier for each comment     |
+| comment_text | TEXT         | The actual content of the comment      |
+| user_id      | Foreign Key  | References `Users.user_id`             |
+| ticket_id    | Foreign Key  | References `Tickets.ticket_id`         |
+| created_at   | TIMESTAMP    | Timestamp of when the comment was created |
+
+**Attachments Table:** Stores attachments associated with tickets for enhanced issue reporting.
+| Column Name   | Data Type    | Description                                |
+|---------------|--------------|--------------------------------------------|
+| attachment_id | Primary Key  | Unique identifier for each attachment      |
+| ticket_id     | Foreign Key  | References `Tickets.ticket_id`             |
+| file_path     | VARCHAR(255) | File path to the stored attachment         |
+| uploaded_at   | TIMESTAMP    | Timestamp of when the attachment was uploaded |
+
 ---
 
 ## Future Enhancements
