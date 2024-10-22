@@ -12,8 +12,12 @@
 - [Future Enhancements](#future-enhancements)
 - [Contributors](#contributors)
 
+---
+
 ## Project Overview
 **Debug Dynasty** is building a **JIRA-like Ticketing System** that facilitates efficient task and issue management for software projects. Our system enables project managers and team members to create, assign, track, and resolve tickets, while promoting collaboration through comments and attachments. The project focuses on delivering a user-friendly task management workflow to handle software project issues.
+
+---
 
 ## Features
 - **User Authentication:** Secure registration and login with hashed passwords.
@@ -24,6 +28,8 @@
 - **Ticket Prioritization:** Organize tickets by priority (Low, Medium, High, Critical).
 - **Deadlines:** Set and track ticket deadlines, with overdue task notifications.
 - **Ticket Assignment:** Project managers can assign/reassign tickets to team members.
+
+---
 
 ## User Stories
 1. **User Registration & Authentication:** As a user, I want to securely register, log in, and manage my account details.
@@ -36,6 +42,8 @@
 8. **Comments:** As a user, I want to comment on tickets for collaboration.
 9. **Deadlines & Overdue Tracking:** As a user, I want to set deadlines for tickets and track overdue tasks.
 10. **File Attachments:** As a user, I want to attach files or screenshots to tickets for better issue reporting.
+
+---
 
 ## System Requirements
 ### Authentication System:
@@ -53,19 +61,34 @@
 ### Reporting & Dashboard:
 - View project metrics such as total tickets, tickets by status, overdue tickets, and tickets by priority.
 
+---
+
 ## Tech Stack
 - **Backend:**
-  - Python (Flask or Django)
-  - MySQL/PostgreSQL (RDBMS)
+  - Python (Flask)
+  - MySQL (RDBMS)
   - RESTful API
 - **Frontend:**
   - HTML/CSS
-  - JavaScript (Optional: React for enhanced user experience)
+  - JavaScript
 - **Other Tools:**
   - Git & GitHub for version control.
-  - Docker (Optional for containerization).
+ 
+---
 
 ## Installation Instructions
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/debug-dynasty-jira-system.git
+
+---
+
+## Database Schema
+
+---
+
+## Future Enhancements
+
+---
+
+# Contributors
+- Mahammad Abdullayev
+- Benjamin Adebanjo Ikuesan
+- Arina Semianiuk
