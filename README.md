@@ -8,7 +8,6 @@
 - [Tech Stack](#tech-stack)
 - [Installation Instructions](#installation-instructions)
 - [Database Schema](#database-schema)
-- [API Endpoints](#api-endpoints)
 - [Future Enhancements](#future-enhancements)
 - [Contributors](#contributors)
 
