@@ -1,4 +1,4 @@
-# Debug Dynasty: JIRA-like Ticketing System
+# JIRA-like Ticketing System
 
 ## Table of Contents
 - [Project Overview](#project-overview)
