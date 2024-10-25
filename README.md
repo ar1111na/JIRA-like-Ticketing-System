@@ -64,7 +64,7 @@ We have created a **JIRA-like Ticketing System** that facilitates efficient task
 
 ## Tech Stack
 - **Backend:**
-  - Python (Flask)
+  - Python (Django)
   - MySQL (RDBMS)
   - RESTful API
 - **Frontend:**
