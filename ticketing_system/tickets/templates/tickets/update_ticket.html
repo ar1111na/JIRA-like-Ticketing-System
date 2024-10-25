@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Ticket</title>
+</head>
+<body>
+    <h1>Update Ticket: {{ ticket.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Ticket</button>
+    </form>
+    <a href="{% url 'ticket_list' %}">Back to Tickets</a>
+</body>
+</html>

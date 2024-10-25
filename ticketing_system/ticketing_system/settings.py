@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users',         # Your user management app
     'tickets',       # Your ticket management app
     'dashboard',     # Your dashboard app
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
