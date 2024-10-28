@@ -49,3 +49,16 @@ def logout_view(request):
         logout(request)
         return redirect("/")
     
+@login_required(login_url='/users/login/')  
+def profile_view(request):
+    user = request.user
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None  # Optional: Handle the case where the profile doesn't exist
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+    return render(request, 'users/profile.html', context)
