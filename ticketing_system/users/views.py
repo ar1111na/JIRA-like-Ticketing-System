@@ -41,3 +41,11 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, 'users/login.html', {"form": form})
+
+
+@login_required(login_url='/users/login/')  
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("/")
+    
