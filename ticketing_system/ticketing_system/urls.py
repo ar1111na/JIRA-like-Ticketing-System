@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     #path('users/', include('users.urls')),
     path('api/', include('tickets.urls')),  # Include API routes
     path('tickets/', include('tickets.urls')),   # Include HTML routes for ticket management
