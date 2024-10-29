@@ -53,12 +53,24 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# Email settings for development
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mhmmdabdullayev66@gmail.com'  #  Gmail address
+EMAIL_HOST_PASSWORD = 'dxxx qifq zvvu qdyk'  #  Gmail App Password
+
 ROOT_URLCONF = 'ticketing_system.urls'
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'users', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
