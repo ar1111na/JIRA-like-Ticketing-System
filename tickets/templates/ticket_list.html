@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket List</title>
+</head>
+<body>
+    <h1>All Tickets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assignee</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.description }}</td>
+                    <td>{{ ticket.priority }}</td>
+                    <td>{{ ticket.status }}</td>
+                    <td>{{ ticket.assignee }}</td>
+                    <td>
+                        <a href="{% url 'update_ticket' ticket.id %}">Edit</a> |
+                        <a href="{% url 'add_comment' ticket.id %}">Add Comment</a> |
+                        <a href="{% url 'add_attachment' ticket.id %}">Add Attachment</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'create_ticket' %}">Create New Ticket</a>
+</body>
+</html>

@@ -1,0 +1,944 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+     DashBoards - Ticket Management
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+
+    <div class="main-content board">
+        <div class="row">
+            <div class="col-12">
+                <div class="box card-box">
+                    {% comment %} <div class="icon-box bg-color-1">
+                        <div class="icon bg-icon-1">
+                            <i class="bx bxs-bell bx-tada"></i>
+                        </div>
+                        <div class="content">
+                            <h5 class="title-box">Notification</h5>
+                            <p class="color-1 mb-0 pt-4">5 Unread notification</p>
+                        </div> 
+                    </div> {% endcomment %}
+                    {% comment %} <div class="icon-box bg-color-2">
+                        <div class="icon bg-icon-2">
+                            <i class='bx bxs-message-rounded'></i>
+                        </div>
+                         <div class="content click-c">
+                            <h5 class="title-box">Message</h5>
+                            <p class="color-2 mb-0 pt-4">5 Unread notification</p>
+                        </div> 
+                        <div class="notification-list card">
+                             <div class="top box-header">
+                                <h5>Notification</h5>
+
+                            </div> 
+                            <div class="pd-1r">
+                                <div class="divider"></div>
+                            </div>
+
+                            <div class="box-body">
+                                <ul class="list">
+                                    <li class="d-flex no-seen">
+                                        <div class="img-mess"><img class="mr-14" src="./images/avatar/avt-1.png" alt="avt"></div>
+                                        <div class="info">
+                                            <a href="#" class="font-w600 mb-0 color-primary">Elizabeth Holland</a>
+                                            <p class="pb-0 mb-0 line-h14 mt-6">Proin ac quam et lectus vestibulum</p>
+                                        </div>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        <div class="img-mess"><img class="mr-14" src="./images/avatar/avt-1.png" alt="avt"></div>
+                                        <div class="info">
+                                            <a href="#" class="font-w600 mb-0 color-primary">Elizabeth Holland</a>
+                                            <p class="pb-0 mb-0 line-h14 mt-6">Proin ac quam et lectus vestibulum</p>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                                <div class="btn-view">
+                                    <a class="font-w600 h5" href="message.html">View All</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="icon-box bg-color-3">
+                        <a class="create d-flex" href="calendar.html">
+                            <div class="icon bg-icon-3">
+                                <i class="bx bx-calendar"></i>
+                            </div>
+                            <div class="content">
+                                <h5 class="title-box">Calendar</h5>
+                                <p class="color-3 mb-0 pt-4">5 Unread notification</p>
+                            </div>
+                        </a>
+                    </div> {% endcomment %}
+                    <div class="icon-box bg-color-4">
+                        <a class="create d-flex" href="#" data-toggle="modal" data-target="#add_project">
+                            <div class="icon bg-white">
+                                <i class="bx bx-plus"></i>
+                            </div>
+                            <div class="content d-flex align-items-center">
+                                <h5 class="color-white">Create New Project</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h4 class="box-title">Tracking Board</h4>
+                        <div class="box-right d-flex">
+                            <a class="btn-add" href="project-details.html">Filter Task</a>
+                            <div class="icon-ratting">
+                                <i class='bx bxs-star'></i>
+                            </div>
+                            <div class="dropdown ml-14">
+                                <a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-dots-vertical-rounded fs-22'></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="box-body d-flex justify-content-between pb-0">
+                        <div class="team-name">
+                            <a href="#" class="team">
+                                <div class="icon"><i class="fas fa-tags"></i></div>
+                                <h5>Status</h5>
+                            </a>
+                        </div>
+                        <div class="action" id="priorityActionLinks">
+                            <a href="#" class="invite" data-priority="Low">Low</a>
+                            <a href="#" class="edit" data-priority="Medium">Medium</a>
+                            <a href="#" class="invite" data-priority="High"><i class="fas fa-user-plus mr-5"></i>High</a>
+                            <a href="#" class="invite"data-priority="Critical" >Critical<i class="fas fa-caret-down pl-12"></i></a>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="kanban-board card mb-0 pd-0">
+                    <div class="box-body pd-0">
+                        <div class="kanban-cont">
+                            <div class="kanban-list kanban-list-to-do">
+                                <div class="kanban-header">
+                                    <h6 class="card-title">Tasks</h6>
+                                    <div class="dropdown">
+                                        <a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="#">Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kanban-wrap">
+                                    {% for post in dashboards %}
+                                    <div class="panel">
+                                        <div class="kanban-box item-box">
+                                            <div class="dropdown edit">
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <i class=""> : </i>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_card_modal"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                                </div>
+                                            </div>
+                                            <div class="img-box">
+                                                <img src="./images/to-do-list/project-1.png" alt="">
+                                            </div>
+                                            <div class="content-box">    
+                                                <h6 class="title fs-16">    {{ post.title }}     </h6>
+                                                <h6 class="title fs-16">   {{ post.comment }}      </h6> 
+                                                <h6 class="title fs-16">   {{ post.ticketsdtails }}      </h6> 
+                                                <ul>
+                                                    <li>Low: {{ priority_counts.low.count }} ({{ priority_counts.low.percentage }}%)</li>
+                                                    <li>Medium: {{ priority_counts.medium.count }} ({{ priority_counts.medium.percentage }}%)</li>
+                                                    <li>High: {{ priority_counts.high.count }} ({{ priority_counts.high.percentage }}%)</li>
+                                                    <li>Critical: {{ priority_counts.critical.count }} ({{ priority_counts.critical.percentage }}%)</li>
+                                                </ul>
+                                                {% comment %} <h6 class="title fs-16">    {{ post.piority }}      </h6>  {% endcomment %}
+                                                <i class="" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ post.piority }}
+                                                </i>
+                                                <div class="progress skill-progress mt-15 mb-15" style="height:7px;">
+                                                    <div class="progress-bar progress-animated" style="width: 78%; height:7px;" role="progressbar">
+                                                        <span class="sr-only">78% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="link"><a href="#"><i class="fas fa-paperclip"></i></a></div>
+                                                    <div class="time">
+                                                        <p class="font-main mb-0"><i class="far fa-clock"></i>Created {{ post.datecreated }}</p>
+                                                        <p class="font-main mb-0"><i class="far fa-clock"></i>Due {{ post.Duedate }}</p>
+                                                    </div>
+                                                </div>                                            
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    {% endfor %} 
+                                </div>
+                                <div class="btn-add-card">
+                                    <a class="dropdown-item font-w500 fs-16" href="#" data-toggle="modal" data-target="#add_card_modal"><i class="fas fa-plus mr-14"></i>Add a task</a>
+                                </div>
+                            </div>
+                            <div class="kanban-list kanban-progress">
+                                <div class="kanban-header">
+                                    <h6 class="card-title">In Progress</h6>
+                                </div>
+                                <div class="kanban-wrap">
+                                    <div class="panel">
+                                        <div class="kanban-box item-box" id="card1" >
+                                            <div class="dropdown edit">
+                                                <a href="#" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-pencil-alt">  </i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_card_modal"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                                </div>
+                                            </div>
+                                            <div class="img-box">
+                                                <img src="./images/to-do-list/project-2.png" alt="">
+                                            </div>
+                                             <div class="content-box">
+                                                <h6 class="title fs-16">Food Website hero area</h6>
+                                                <div class="progress skill-progress mt-15 mb-15" style="height:7px;">
+                                                    <div class="progress-bar progress-animated" style="width: 78%; height:7px;" role="progressbar">
+                                                        <span class="sr-only">78% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="link"><a href="#"><i class="fas fa-paperclip"></i></a></div>
+                                                    <div class="time">
+                                                        <p class="font-main mb-0"><i class="far fa-clock"></i>Due in 5 days</p>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="kanban-box item-box">
+                                            <div class="dropdown edit">
+                                                <a href="#" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_card_modal"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                                </div>
+                                            </div>
+                                            <div class="img-box">
+                                                <img src="./images/to-do-list/project-3.png" alt="">
+                                            </div>
+                                            <div class="content-box">
+                                                <h6 class="title fs-16">Food Website hero area</h6>
+                                                <div class="progress skill-progress mt-15 mb-15" style="height:7px;">
+                                                    <div class="progress-bar progress-animated" style="width: 78%; height:7px;" role="progressbar">
+                                                        <span class="sr-only">78% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="link"><a href="#"><i class="fas fa-paperclip"></i></a></div>
+                                                    <div class="time">
+                                                        <p class="font-main mb-0"><i class="far fa-clock"></i>Due in 5 days</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-add-card">
+                                    {% comment %} <a class="dropdown-item font-w500 fs-16" href="#" data-toggle="modal" data-target="#add_card_modal"><i class="fas fa-plus mr-14"></i>Add a card</a> {% endcomment %}
+                                </div>
+                            </div>
+                            <div class="kanban-list kanban-review">
+                                <div class="kanban-header">
+                                    <h6 class="card-title">In Review</h6>
+                                </div>
+                                <div class="kanban-wrap">
+                                    <div class="panel">
+                                        <div class="kanban-box item-box" id="card2">
+                                            <div class="dropdown edit">
+                                                <a href="#" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_card_modal"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                                </div>
+                                            </div>
+                                            <div class="img-box">
+                                                <img src="./images/to-do-list/project-4.png" alt="">
+                                            </div>
+                                            <div class="content-box">
+                                                <h6 class="title fs-16">Food Website hero area</h6>
+                                                <div class="progress skill-progress mt-15 mb-15" style="height:7px;">
+                                                    <div class="progress-bar progress-animated" style="width: 78%; height:7px;" role="progressbar">
+                                                        <span class="sr-only">78% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="link"><a href="#"><i class="fas fa-paperclip"></i></a></div>
+                                                    <div class="time">
+                                                        <p class="font-main mb-0"><i class="far fa-clock"></i>Due in 5 days</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-add-card">
+                                    {% comment %} <a class="dropdown-item font-w500 fs-16" href="#" data-toggle="modal" data-target="#add_card_modal"><i class="fas fa-plus mr-14"></i>Add a card</a> {% endcomment %}
+                                </div>
+                            </div>
+                            <div class="kanban-list kanban-approved">
+                                <div class="kanban-header">
+                                    <h6 class="card-title">Approved</h6>
+                                </div>
+                                <div class="kanban-wrap">
+                                    <div class="panel">
+                                        <div class="kanban-box item-box" id="card3">
+                                            <div class="dropdown edit">
+                                                <a href="#" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="bx bx-trash"></i> Delete</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_card_modal"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                                </div>
+                                            </div>
+                                            <div class="img-box">
+                                                <img src="./images/to-do-list/project-4.png" alt="">
+                                            </div>
+                                            <div class="content-box">
+                                                <h6 class="title fs-16">Food Website hero area</h6>
+                                                <div class="progress skill-progress mt-15 mb-15" style="height:7px;">
+                                                    <div class="progress-bar progress-animated" style="width: 78%; height:7px;" role="progressbar">
+                                                        <span class="sr-only">78% Complete</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="link"><a href="#"><i class="fas fa-paperclip"></i></a></div>
+                                                    <div class="time">
+                                                        <p class="font-main mb-0"><i class="far fa-clock"></i>Due in 5 days</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-add-card">
+                                    {% comment %} <a class="dropdown-item font-w500 fs-16" href="#" data-toggle="modal" data-target="#add_card_modal"><i class="fas fa-plus mr-14"></i>Add a card</a> {% endcomment %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="add_project" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Project Name</label>
+                                        <input class="form-control" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Client</label>
+                                        <select class="select">
+                                            <option>Client 1</option>
+                                            <option>Client 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Start Date</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control " type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>End Date</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control " type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Rate</label>
+                                        <input placeholder="$50" class="form-control" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <select class="select">
+                                            <option>Hourly</option>
+                                            <option selected>Fixed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Priority</label>
+                                        <select class="select">
+                                            <option>Crtical</option>
+                                            <option selected>High</option>
+                                            <option>Medium</option>
+                                            <option>Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Files</label>
+                                <input class="form-control" type="file">
+                            </div>
+                            <div class="submit-section">
+                                <button class="btn btn-primary submit-btn">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal custom-modal fade" id="delete_project" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-header">
+                            <h3>Delete Card</h3>
+                            <p>Are you sure want to delete?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                            <div class="row">
+                                <div class="col-6 mb-0">
+                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                                </div>
+                                <div class="col-6 mb-0">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="edit_card_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Card</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Image Card</label>
+                                <input class="form-control" type="file">
+                            </div>
+                            <div class="form-group">
+                                <label>Card Name</label>
+                                <input type="text" class="form-control" value="Food Website hero area">
+                            </div>
+                            <div class="form-group">
+                                <label>Due Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control " type="date" value="">
+                                </div>
+                            </div>
+                            <div class="submit-section text-center">
+                                <button class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="add_card_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Card</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Image Card</label>
+                                <input class="form-control" type="file">
+                            </div>
+                            <div class="form-group">
+                                <label>Card Name</label>
+                                <input type="text" class="form-control" value="">
+                            </div>
+                            <div class="form-group">
+                                <label>Due Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control " type="date" value="">
+                                </div>
+                            </div>
+                            <div class="submit-section text-center">
+                                <button class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+
+<!-- ==============================================================================  ====================================== ============  -->
+
+ <!-- MAIN CONTENT -->
+ <div class="main">
+    <div class="main-content user">
+        <div class="row">
+            <div class="col-9 col-xl-12">
+                <div class="box card-box mb-20">
+                    <div class="icon-box bg-color-1">
+                        <div class="icon bg-icon-1">
+                            <i class='bx bxs-briefcase'></i>
+                        </div>
+                        <div class="content">
+                            <h5 class="title-box fs-15 mt-2">Total Task</h5>
+                            <div class="themesflat-counter fs-14 font-wb color-1">
+                                <span class="number" data-from="0" data-to="1225" data-speed="2500" data-inviewport="yes">1225</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="icon-box bg-color-2">
+                        <div class="icon bg-icon-2">
+                            <i class='bx bx-task'></i>
+                        </div>
+                        <div class="content click-c">
+                            <h5 class="title-box fs-15 mt-2">Running Task</h5>
+                            <div class="themesflat-counter fs-14 font-wb color-2">
+                                <span class="number" data-from="0" data-to="309" data-speed="2500" data-inviewport="yes">154 +</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="icon-box bg-color-3">
+                        <div class="icon bg-icon-3">
+                            <i class='bx bx-block'></i>
+                        </div>
+                        <div class="content click-c">
+                            <h5 class="title-box fs-15 mt-2">On Hold Task</h5>
+                            <div class="themesflat-counter fs-14 font-wb color-3">
+                                <span class="number" data-from="0" data-to="309" data-speed="2500" data-inviewport="yes">75 +</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="icon-box bg-color-5">
+                        <div class="icon bg-icon-5">
+                            <i class='bx bx-task color-white'></i>
+                        </div>
+                        <div class="content click-c">
+                            <h5 class="title-box fs-15 mt-2">Complete Task</h5>
+                            <div class="themesflat-counter fs-14 font-wb color-4">
+                                <span class="number" data-from="0" data-to="309" data-speed="2500" data-inviewport="yes">120 +</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-body pb-30">
+                        <div class="row">
+                            <div class="col-md-12 col-xl-10 mb-0">
+                                <div class="row">
+                                    <div class="col-md-12 col-xl-4 mb-0">
+                                        <div class="form-group"> <label class="form-label">From:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class='bx bx-calendar'></i> </div>
+                                                </div><input class="form-control fc-datepicker" placeholder="DD-MM-YYYY" type="text"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-4 mb-0">
+                                        <div class="form-group"> <label class="form-label">To:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class='bx bx-calendar'></i> </div>
+                                                </div><input class="form-control fc-datepicker" placeholder="DD-MM-YYYY" type="text"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-4 mb-0">
+                                        <div class="form-group"> <label class="form-label">Select Priority:</label> <select id="priorityFilter" name="attendance" class="form-control custom-select select2 select2-hidden-accessible" data-placeholder="Select Priority" tabindex="-1" aria-hidden="true"
+                                                data-select2-id="select2-data-16-akyu"><option label="Select Priority" data-select2-id="select2-data-18-ezae"></option> <option value="critical">Critical</option> </option> <option value="high">High</option> <option value="medium">Medium</option> <option value="low">Low</option> </select>
+                                            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="select2-data-17-6y8j" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-attendance-ws-container" aria-controls="select2-attendance-ws-container"><span class="select2-selection__rendered" id="select2-attendance-ws-container" role="textbox" aria-readonly="true" title="Select Priority"></span>
+                                            <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                                            </span>
+                                            </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xl-2 mb-0">
+                                <div class="form-group mt-32"> <a href="#" class="btn bg-primary btn-block color-white">Search</a> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <div id="task-profile_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                <!-- <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="task-profile_length"><label>Show <select name="task-profile_length" aria-controls="task-profile" class="form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div id="task-profile_filter" class="dataTables_filter"><label><input type="search" class="form-control form-control-sm" placeholder="Search..." aria-controls="task-profile"></label></div>
+                                    </div>
+                                </div> -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-vcenter text-nowrap table-bordered dataTable no-footer" id="task-profile" role="grid">
+                                            <thead>
+                                                <tr class="top">
+                                                    <th class="border-bottom-0 text-center sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 26.6562px;">No</th>
+                                                    <th class="border-bottom-0 sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 222.312px;">Task</th>
+                                                    <th class="border-bottom-0 sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 84.8281px;">Priority</th>
+                                                    <th class="border-bottom-0 sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 87.9844px;">Start Date</th>
+                                                    <th class="border-bottom-0 sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 87.9844px;">Deadline</th>
+                                                    <th class="border-bottom-0 sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 71.875px;">Progress</th>
+                                                    <th class="border-bottom-0 sorting fs-14 font-w500" tabindex="0" aria-controls="task-profile" rowspan="1" colspan="1" style="width: 110.719px;">Work Status</th>
+                                                    <th class="border-bottom-0 sorting_disabled fs-14 font-w500" rowspan="1" colspan="1" style="width: 145.391px;">Actions</th>
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                            {% for post in dashboards %}
+
+                                                <tr class="odd">
+                                                    <td class="text-center">1</td>
+                                                    <td>
+                                                        <a href="#" class="d-flex "> <span>{{ post.title }} </span> </a>
+                                                    </td>
+                                                    <td><span class="badge badge-danger-light">{{ post.piority }}</span></td> 
+                                                    <td>{{ post.datecreated }}</td>
+                                                    <td>{{ post.Duedate }}</td>
+                                                    <td>
+                                                        <div class="progress progress-sm">
+                                                            <div class="progress-bar bg-primary w-30"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="badge badge-warning">On hold</span></td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class='bx bx-dots-horizontal-rounded'></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_client"><i class="bx bx-trash"></i> Delete</a>
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_client"><i class="bx bx-edit mr-5"></i>Edit</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %} 
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="task-profile_info" role="status" aria-live="polite">Showing 1 to 8 of 8 entries</div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="task-profile_paginate">
+                                            <ul class="pagination">
+                                                <li class="paginate_button page-item previous disabled" id="task-profile_previous"><a href="#" aria-controls="task-profile" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                                <li class="paginate_button page-item "><a href="#" aria-controls="task-profile" data-dt-idx="1" tabindex="0" class="page-link">01</a></li>
+                                                <li class="paginate_button page-item active"><a href="#" aria-controls="task-profile" data-dt-idx="1" tabindex="0" class="page-link">02</a></li>
+                                                <li class="paginate_button page-item "><a href="#" aria-controls="task-profile" data-dt-idx="1" tabindex="0" class="page-link">03</a></li>
+                                                <li class="paginate_button page-item next disabled" id="task-profile_next"><a href="#" aria-controls="task-profile" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 col-xl-12">
+                <div class="box user-pro-list overflow-hidden mb-30">
+                    <div class="box-body">
+                        <div class="user-pic text-center">
+                            <div class="avatar ">
+                                <img src="./images/profile/user-profile.png" alt="">
+                                <div class="pulse-css"></div>
+                            </div>
+                            <div class="pro-user mt-40">
+                                <h5 class="pro-user-username text-dark mb-1 fs-15">Benjamin</h5>
+                                <h6 class="pro-user-desc text-muted fs-14">bikuesan@mail.com</h6>
+                                <div class="star-ratings start-ratings-main mb-10 clearfix">
+                                    <div class="stars stars-example-fontawesome star-sm">
+                                        <div class="br-wrapper br-theme-fontawesome-stars">
+                                            <select id="example-fontawesome" name="rating" style="display: none;"><option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4" selected="">4</option> <option value="5">5</option> </select>
+                                            <!-- <div class="br-widget">
+                                                <a href="#" data-rating-value="1" data-rating-text="1" class="br-selected"></a>
+                                                <a href="#" data-rating-value="2" data-rating-text="2" class="br-selected"></a>
+                                                <a href="#" data-rating-value="3" data-rating-text="3" class="br-selected"></a>
+                                                <a href="#" data-rating-value="4" data-rating-text="4" class="br-selected br-current"></a>
+                                                <a href="#" data-rating-value="5" data-rating-text="5"></a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body pt-19">
+                        <div class="row">
+                            <div class="col-4 text-center mb-0 pd-0">
+                                <div class="icon-box">
+                                    <i class='bx bxs-briefcase'></i>
+                                </div>
+
+                                <h5 class="fs-14 font-w400 mb-0">Total Project</h5>
+                                <h5 class="mb-2"> <span class="fs-14 font-w600 ">55 +</span> </h5>
+                            </div>
+                            <div class="col-4  text-center mb-0 pd-0">
+                                <div class="icon-box">
+                                    <i class='bx bxs-shopping-bags'></i>
+                                </div>
+
+                                <h5 class="fs-14 font-w400 mb-0">Total Task</h5>
+                                <h5 class="mb-2"> <span class="fs-14 font-w600">35 +</span> </h5>
+                            </div>
+                            <div class="col-4 text-center mb-0 pd-0">
+                                <div class="icon-box">
+                                    <i class='bx bxs-trophy'></i>
+                                </div>
+
+                                <h5 class="fs-14 font-w400 mb-0">Awards</h5>
+                                <h5 class="mb-2"> <span class="fs-14 font-w600 ">03</span> </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer pt-38">
+                        <div class="btn-list text-center">
+                            <a href="#" class="btn btn-light"><i class='bx bxs-envelope' ></i> </a>
+                            <a href="#" class="btn btn-light"> <i class='bx bxs-phone-call'></i> </a>
+                            <a href="#" class="btn btn-light"><i class='bx bxs-error-circle' ></i></a>
+                            <a href="#" class="btn btn-light"> <i class='bx bxs-message-alt-edit'></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box left-dot pt-39 mb-30">
+                    <div class="box-header  border-0 ">
+                        <div class="box-title fs-20 font-w600">Basic Info</div>
+                    </div>
+                    <div class="box-body pt-16 user-profile">
+                        <div class="table-responsive">
+                            <table class="table mb-0 mw-100 color-span">
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Employee ID</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">#365900</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Designation</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">Sr. Designer</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Department</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">Development</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Join Date</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">25 - 12 - 2022</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Phone Number</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">+11 05986 2359 03</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Status</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="badge badge-success">Active</span> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="box left-dot">
+                    <div class="box-header  border-0 ">
+                        <div class="box-title fs-20 font-w600">Statistics</div>
+                    </div>
+                    <div class="box-body pt-10 ">
+                        <div class="d-flex justify-content-between mt-10">
+                            <div class="progress-cicle">
+                                <div class="chart-circle chart-circle-xl" data-value="0.75" data-thickness="5" data-color="#E6154E"><canvas width="80" height="80"></canvas><canvas width="80" height="80"></canvas>
+                                    <div class="chart-circle-value">45%</div>
+                                </div>
+                                <div class="title-progress fs-15 font-w600 mt-10">Task</div>
+                            </div>
+                            <div class="progress-cicle">
+                                <div class="chart-circle chart-circle-xl" data-value="0.75" data-thickness="5" data-color="#3C21F7"><canvas width="80" height="80"></canvas><canvas width="80" height="80"></canvas>
+                                    <div class="chart-circle-value">55%</div>
+                                </div>
+                                <div class="title-progress fs-15 font-w600 mt-10">Projects</div>
+                            </div>
+                            <div class="progress-cicle">
+                                <div class="chart-circle chart-circle-xl" data-value="0.75" data-thickness="5" data-color="#E58911"><canvas width="80" height="80"></canvas><canvas width="80" height="80"></canvas>
+                                    <div class="chart-circle-value">75%</div>
+                                </div>
+                                <div class="title-progress fs-15 font-w600 mt-10">Performanance</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+
+<!-- Chart Part -->
+
+<div class="row">
+<div class="col-6 col-md-12">
+    <!-- CUSTOMERS CHART -->
+    <div class="box f-height">
+        <div class="box-header d-flex justify-content-between">
+            <h3 class="mt-9 fs-22">Project Statistics</h3>
+            <ul class="card-list mb-0">
+                <li class="custom-label"><span></span>Complete</li>
+                <li class="custom-label"><span></span>Doing</li>
+            </ul>
+        </div>
+        <div class="box-body pt-20">
+            <div id="customer-chart"></div>
+        </div>
+    </div>
+    <!-- END CUSTOMERS CHART -->
+</div>
+
+<!--  new div  --> 
+<div class="col-6 col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <div class="me-auto">
+                <h4 class="card-title fs-22">Priority Chart</h4>
+                <p class="fs-14 mt-4">This are the details</p>
+            </div>
+        </div>
+        <div class="box-body pt-0">
+            <div class="row">
+                <div class="col-6 col-xl-12 col-md-6 col-sm-12 w-sm-100 mb-0">
+                    <ul class="box-list mt-25 pr-60">
+                        <li><span class="bg-blue square"></span>Priority 1<span>25%</span></li>
+                        <li><span class="bg-success square"></span>Priority 7<span>18%</span></li>
+                        <li><span class="bg-warning square"></span>Priority 3<span>17%</span></li>
+                        <li><span class="bg-blue square"></span>Priority 4<span>12.50%</span></li>
+                        <li><span class="bg-success square"></span>Priority 5<span>12.50%</span></li>
+                        <li><span class="bg-warning square"></span>Priority 6<span>12.50%</span></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-xl-12 col-md-6 col-sm-12 w-sm-100 mb-0">
+                    <!-- <canvas id="doughnut-chart" width="240" height="240"></canvas> -->
+                    <div class="canvas-container">
+                        <canvas id="chartjs-4" class="chartjs" width="100" height="100"></canvas>
+                        <div class="chart-data">
+                            <div data-percent="5" data-color="#3C21F7" data-label="Web Design"></div>
+                            <div data-percent="5" data-color="#00BC8B" data-label="UX/UI Design"></div>
+                            <div data-percent="5" data-color="#FFB800" data-label="Graphics Design"></div>
+                            <div data-percent="5" data-color="#00ECCC" data-label="Motion Design"></div>
+                            <div data-percent="5" data-color="#EF7F5A" data-label="Brand Identity"></div>
+                            <div data-percent="75" data-color="#5D45FB" data-label="Others"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const priorityFilter = document.getElementById("priorityFilter");
+    const tableRows = document.querySelectorAll("#task-profile tbody tr");
+
+    priorityFilter.addEventListener("change", function() {
+        const selectedPriority = priorityFilter.value;
+
+        tableRows.forEach(row => {
+            const rowPriority = row.querySelector("td:nth-child(3) span").textContent.trim();
+
+            if (selectedPriority === "" || rowPriority === selectedPriority) {
+                row.style.display = ""; // Show row
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

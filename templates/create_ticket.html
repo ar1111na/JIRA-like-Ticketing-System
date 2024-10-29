@@ -1,0 +1,24 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ticket</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="fancy">Create a New Ticket</h1>
+        </header>
+        <form method="post" class="ticket-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create Ticket</button>
+        </form>
+        <a href="{% url 'homepage' %}">Back to Home</a>
+    </div>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html> {% endcomment %}

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block title%}
+     DashBoards - Ticket Management
+{% endblock %}
+
+{% block content %}
+    <div class="metrics">
+        <!-- Card for Open Tickets -->
+        <div class="card" id="openTickets">
+            <h2>Open Tickets</h2>
+            <div>
+                {% for post in dashboards %}
+                <article class="dashboard">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.datecreated }}</p>
+                    <p>{{ post.comment }}</p>
+                    <p>{{ post.ticketsdtails }}</p>
+                    <p>{{ post.piority }}</p>
+                    <p>{{ post.Duedate }}</p>
+                </article>
+            {% endfor %}
+            </div>
+            <p>{{ open_tickets_count }}</p>
+        </div>
+        <!-- Card for In Progress Tickets -->
+        <div class="card" id="inProgressTickets">
+            <h2>In Progress Tickets</h2>
+            <p>{{ in_progress_tickets_count }}</p>
+        </div>
+        <!-- Card for Resolved Tickets -->
+        <div class="card" id="resolvedTickets">
+            <h2>Resolved Tickets</h2>
+            <p>{{ resolved_tickets_count }}</p>
+        </div>
+        <!-- Card for Closed Tickets -->
+        <div class="card" id="closedTickets">
+            <h2>Closed Tickets</h2>
+            <p>{{ closed_tickets_count }}</p>
+        </div>
+    </div>
+
+ 
+{% comment %} real up {% endcomment %}
+
+
+
+    {% comment %} <section>
+    {% for post in dashboards %}
+        <article class="dashboard">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.datecreated }}</p>
+            <p>{{ post.comment }}</p>
+            <p>{{ post.ticketsdtails }}</p>
+            <p>{{ post.piority }}</p>
+            <p>{{ post.Duedate }}</p>
+        </article>
+    {% endfor %}
+    </section> {% endcomment %}
+{% endblock %}
+
+
+
+
+
