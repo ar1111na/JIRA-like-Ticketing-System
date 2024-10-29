@@ -18,6 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 
+
+# Import required settings for serving media files
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
@@ -26,3 +31,7 @@ urlpatterns = [
     path('tickets/', include('tickets.urls')),   # Include HTML routes for ticket management
     #path('dashboard/', include('dashboard.urls')),
 ]
+
+# Add static media URL configuration
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

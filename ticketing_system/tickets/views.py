@@ -4,6 +4,15 @@ from .models import Ticket, Comment, Attachment
 from .serializers import TicketSerializer, CommentSerializer, AttachmentSerializer
 from .forms import TicketForm, CommentForm, AttachmentForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.http import JsonResponse
+from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+import json
 
 # ViewSet for Ticket model to handle CRUD operations (API endpoints)
 class TicketViewSet(viewsets.ModelViewSet):
@@ -51,6 +60,11 @@ def update_ticket(request, pk):
         form = TicketForm(instance=ticket)
     return render(request, 'tickets/update_ticket.html', {'form': form, 'ticket': ticket})
 
+def delete_ticket(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    ticket.delete()
+    return HttpResponseRedirect(reverse('ticket_list'))
+'''
 # Function-based view to add a new comment
 @login_required
 def add_comment(request, ticket_id):
@@ -81,3 +95,105 @@ def add_attachment(request, ticket_id):
     else:
         form = AttachmentForm()
     return render(request, 'tickets/add_attachment.html', {'form': form, 'ticket': ticket})
+'''
+@login_required
+@csrf_exempt  # Remove for production, add CSRF handling properly.
+def add_comment(request, ticket_id):
+    ticket = get_object_or_404(Ticket, pk=ticket_id)
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)  # Parse the incoming JSON data
+            form = CommentForm(data)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.ticket = ticket
+                comment.user = request.user
+                comment.save()
+
+                # Prepare response data
+                comments = ticket.comments.all()
+                comments_data = [
+                    {
+                        'user': comment.user.username,
+                        'comment_text': comment.comment_text,
+                        'created_at': comment.created_at.strftime('%Y-%m-%d')
+                    }
+                    for comment in comments
+                ]
+                return JsonResponse({'success': True, 'comments': comments_data}, status=200)
+            else:
+                return JsonResponse({'success': False, 'message': 'Form data is invalid'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON'}, status=400)
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
+
+@login_required
+@csrf_exempt
+def add_attachment(request, ticket_id):
+    ticket = get_object_or_404(Ticket, pk=ticket_id)
+
+    if request.method == 'POST' and request.FILES:
+        form = AttachmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            attachment = form.save(commit=False)
+            attachment.ticket = ticket
+            attachment.save()
+
+            attachments = ticket.attachments.all()
+            attachments_data = [
+                {
+                    'file_path': attachment.file_path.url,
+                    'uploaded_at': attachment.uploaded_at.strftime('%Y-%m-%d %H:%M:%S')
+                }
+                for attachment in attachments
+            ]
+            return JsonResponse({'success': True, 'attachments': attachments_data}, status=200)
+        else:
+            return JsonResponse({'success': False, 'message': 'Form data is invalid'}, status=400)
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method or no file provided'}, status=405)
+
+def ticket_detail_api(request, ticket_id):
+    ticket = get_object_or_404(Ticket, pk=ticket_id)
+
+    # Get all comments related to this ticket
+    comments = ticket.comments.all()
+    comments_data = [
+        {
+            'user': comment.user.username,
+            'comment_text': comment.comment_text,
+            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        }
+        for comment in comments
+    ]
+
+    # Get all attachments related to this ticket
+    attachments = ticket.attachments.all()
+    attachments_data = [
+    {
+        'file_path': attachment.file_path.url,  # Use `.url` to get the complete URL of the attachment
+        'uploaded_at': attachment.uploaded_at.strftime('%Y-%m-%d %H:%M:%S')
+    }
+    for attachment in attachments
+]
+
+    data = {
+        'title': ticket.title,
+        'description': ticket.description,
+        'priority': ticket.priority,
+        'status': ticket.status,
+        'assignee': {'username': ticket.assignee.username} if ticket.assignee else None,
+        'reporter': {'username': ticket.reporter.username} if ticket.reporter else None,
+        'due_date': ticket.due_date.strftime("%d-%m-%Y") if ticket.due_date else None,
+        'comments': comments_data,
+        'attachments': attachments_data
+    }
+    return JsonResponse(data)
+
+
+class TicketDetailAPIView(RetrieveAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+

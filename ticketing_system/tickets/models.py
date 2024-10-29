@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+'''
 # Ticket model to represent an issue or a task
 class Ticket(models.Model):
     PRIORITY_CHOICES = [
@@ -39,6 +39,24 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.ticket.title}"
+'''
+    
+class Ticket(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    priority = models.CharField(max_length=50, choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High'), ('Critical', 'Critical')])
+    status = models.CharField(max_length=50, choices=[('Open', 'Open'), ('In Progress', 'In Progress'), ('Resolved', 'Resolved'), ('Closed', 'Closed')])
+    assignee = models.ForeignKey(User, related_name='assigned_tickets', on_delete=models.SET_NULL, null=True)
+    reporter = models.ForeignKey(User, related_name='reported_tickets', on_delete=models.SET_NULL, null=True)
+    due_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Comment(models.Model):
+    comment_text = models.TextField()
+    ticket = models.ForeignKey(Ticket, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 # Attachment model to allow users to attach files to tickets
 class Attachment(models.Model):

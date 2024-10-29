@@ -1,38 +1,460 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ticket List</title>
-</head>
-<body>
-    <h1>All Tickets</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Assignee</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ticket in tickets %}
-                <tr>
-                    <td>{{ ticket.title }}</td>
-                    <td>{{ ticket.description }}</td>
-                    <td>{{ ticket.priority }}</td>
-                    <td>{{ ticket.status }}</td>
-                    <td>{{ ticket.assignee }}</td>
-                    <td>
-                        <a href="{% url 'update_ticket' ticket.id %}">Edit</a> |
-                        <a href="{% url 'add_comment' ticket.id %}">Add Comment</a> |
-                        <a href="{% url 'add_attachment' ticket.id %}">Add Attachment</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="{% url 'create_ticket' %}">Create New Ticket</a>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}
+Task List
+{% endblock %}
+
+{% block content %}
+{% block maintitle %}
+
+
+
+<div class="main-title">
+    Ticket List
+</div>
+{% endblock maintitle %}
+<!-- MAIN CONTENT -->
+<div class="main">
+    <div class="main-content ticket">
+        <div class="row">
+            <div class="col-9 col-xl-12">
+                <div class="box">
+                    <div class="box-body pb-30">
+                        <div class="row">
+                            <div class="col-md-12 col-xl-10 mb-0">
+                                <div class="row">
+                                    <div class="col-md-12 col-xl-4 mb-0">
+                                        <div class="form-group"> <label class="form-label">From:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class='bx bx-calendar'></i> </div>
+                                                </div><input class="form-control fc-datepicker" placeholder="DD-MM-YYYY"
+                                                    type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-4 mb-0">
+                                        <div class="form-group"> <label class="form-label">To:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class='bx bx-calendar'></i> </div>
+                                                </div><input class="form-control fc-datepicker" placeholder="DD-MM-YYYY"
+                                                    type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-4 mb-0">
+                                        <div class="form-group"> <label class="form-label">Select Priority:</label>
+                                            <select name="attendance"
+                                                class="form-control custom-select select2 select2-hidden-accessible"
+                                                data-placeholder="Select Priority" tabindex="-1" aria-hidden="true"
+                                                data-select2-id="select2-data-16-akyu">
+                                                <option label="Select Priority" data-select2-id="select2-data-18-ezae">
+                                                </option>
+                                                <option value="1">High</option>
+                                                <option value="2">Medium</option>
+                                                <option value="3">Low</option>
+                                            </select>
+                                            <span class="select2 select2-container select2-container--default" dir="ltr"
+                                                data-select2-id="select2-data-17-6y8j" style="width: 100%;"><span
+                                                    class="selection"><span
+                                                        class="select2-selection select2-selection--single"
+                                                        role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                        tabindex="0" aria-disabled="false"
+                                                        aria-labelledby="select2-attendance-ws-container"
+                                                        aria-controls="select2-attendance-ws-container"><span
+                                                            class="select2-selection__rendered"
+                                                            id="select2-attendance-ws-container" role="textbox"
+                                                            aria-readonly="true" title="Select Priority"></span>
+                                                        <span class="select2-selection__arrow" role="presentation"><b
+                                                                role="presentation"></b></span>
+                                                    </span>
+                                                </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xl-2 mb-0">
+                                <div class="form-group mt-32"> <a href="#"
+                                        class="btn bg-primary btn-block color-white">Search</a> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter text-nowrap table-bordered dataTable no-footer"
+                                id="task-profile" role="grid">
+                                <thead>
+                                    <tr class="top">
+                                        <th class="border-bottom-0 text-center sorting fs-14 font-w500"
+                                            style="width: 26.6562px;">No</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 222.312px;">
+                                            Task</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 84.8281px;">
+                                            Priority</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 87.9844px;">
+                                            Start Date</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 87.9844px;">
+                                            Deadline</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 100.000px;">
+                                            Assignee</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 100.000px;">
+                                            Reporter</th>
+                                        <th class="border-bottom-0 sorting fs-14 font-w500" style="width: 110.719px;">
+                                            Work Status</th>
+                                        <th class="border-bottom-0 sorting_disabled fs-14 font-w500"
+                                            style="width: 145.391px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ticket in tickets %}
+                                    <tr class="{% cycle 'odd' 'even' %}">
+                                        <td class="text-center">{{ forloop.counter }}</td>
+                                        <td>
+                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#ticketDetailModal"
+                                                onclick="showTicketDetails('{{ ticket.pk }}')">
+                                                {{ ticket.title }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="badge {% if ticket.priority == 'High' %}badge-danger-light{% elif ticket.priority == 'Medium' %}badge-warning-light{% elif ticket.priority == 'Low' %}badge-success-light{% elif ticket.priority == 'Critical' %}badge-danger{% endif %}">
+                                                {{ ticket.priority }}
+                                            </span>
+                                        </td>
+                                        <td>{{ ticket.created_at|date:"d-m-Y" }}</td>
+                                        <td>{{ ticket.due_date|date:"d-m-Y" }}</td>
+                                        <td>
+                                            {% if ticket.assignee %}
+                                            {{ ticket.assignee.username }}
+                                            {% else %}
+                                            Unassigned
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ ticket.reporter.username }}</td>
+                                        <td>
+                                            <span
+                                                class="badge {% if ticket.status == 'Open' %}badge-primary{% elif ticket.status == 'In Progress' %}badge-warning{% elif ticket.status == 'Resolved' %}badge-success{% elif ticket.status == 'Closed' %}badge-secondary{% endif %}">
+                                                {{ ticket.status }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class='bx bx-dots-horizontal-rounded'></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item"
+                                                        href="{% url 'update_ticket' ticket.pk %}"><i
+                                                            class="bx bx-edit mr-5"></i>Edit</a>
+                                                    <a class="dropdown-item"
+                                                        href="{% url 'delete_ticket' ticket.pk %}"><i
+                                                            class="bx bx-trash"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="10" class="text-center">No tickets available.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 col-xl-12">
+                <div class="box user-pro-list overflow-hidden mb-30">
+                    <div class="box-body">
+                        <div class="user-pic text-center">
+                            <div class="pro-user mt-40">
+                                <h6 class="pro-user-desc text-muted fs-14">{{ user.username }}</h6>
+                                <h6 class="pro-user-desc text-muted fs-14">{{ user.email }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer pt-38">
+                        <div class="btn-list text-center">
+                            <a href="#" class="btn btn-light"><i class='bx bxs-envelope'></i> </a>
+                            <a href="#" class="btn btn-light"> <i class='bx bxs-message-alt-edit'></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box left-dot pt-39 mb-30">
+                    <div class="box-header  border-0 ">
+                        <div class="box-title fs-20 font-w600">Basic Info</div>
+                    </div>
+                    <div class="box-body pt-16 user-profile">
+                        <div class="table-responsive">
+                            <table class="table mb-0 mw-100 color-span">
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">First name</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">Test Name</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Last name</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">Test</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Designation</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">Sr. Designer</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Join Date</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">25 - 12 - 2022</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-0"> <span class="w-50">Phone Number</span> </td>
+                                        <td>:</td>
+                                        <td class="py-2 px-0"> <span class="">+11 05986 2359 03</span> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Ticket Detail Modal -->
+<div class="modal fade" id="ticketDetailModal" tabindex="-1" aria-labelledby="ticketDetailModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Wider modal for more information display -->
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white"> <!-- Nice header styling for emphasis -->
+                <h5 class="modal-title" id="ticketDetailModalLabel">Ticket Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="currentTicketId" value="">
+                <div class="mb-3">
+                    <p><strong>Title:</strong> <span id="ticketTitle"></span></p>
+                    <p><strong>Priority:</strong> <span id="ticketPriority"></span></p>
+                    <p><strong>Status:</strong> <span id="ticketStatus"></span></p>
+                    <p><strong>Assignee:</strong> <span id="ticketAssignee"></span></p>
+                    <p><strong>Reporter:</strong> <span id="ticketReporter"></span></p>
+                    <p><strong>Due Date:</strong> <span id="ticketDueDate"></span></p>
+                    <p><strong>Description:</strong> <span id="ticketDescription"></span></p>
+                </div>
+
+                <hr>
+                <h5 class="mb-3">Comments</h5>
+                <a></a>
+                <div id="ticketComments" class="mb-3"></div>
+
+                <!-- Add Comment Form -->
+                <form id="commentForm" onsubmit="return false;">
+                    <a></a>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea id="commentText" class="form-control" placeholder="Add a comment" required></textarea>
+                    </div>
+                    <button type="button" id="addCommentButton" class="btn btn-primary" style="margin-top: 15px;">Add
+                        Comment</button>
+
+                </form>
+
+
+
+                <hr>
+                <h5 class="mb-3">Attachments</h5>
+                <a></a>
+                <div id="ticketAttachments" class="mb-3"></div>
+
+                <!-- Add Attachment Form -->
+                <form id="attachmentForm" enctype="multipart/form-data" onsubmit="return false;">
+                    <a></a>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="file" id="attachmentFile" class="form-control" required>
+                    </div>
+                    <button type="button" id="addAttachmentButton" class="btn btn-primary" style="margin-top: 15px;">Add
+                        Attachment</button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function showTicketDetails(ticketId) {
+        document.getElementById('currentTicketId').value = ticketId;
+        // Make an AJAX request to get ticket details
+        fetch(`/tickets/api/${ticketId}/`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate the modal with data
+                document.getElementById('ticketTitle').textContent = data.title;
+                document.getElementById('ticketDescription').textContent = data.description;
+                document.getElementById('ticketPriority').textContent = data.priority;
+                document.getElementById('ticketStatus').textContent = data.status;
+                document.getElementById('ticketAssignee').textContent = data.assignee ? data.assignee.username : 'Unassigned';
+                document.getElementById('ticketReporter').textContent = data.reporter ? data.reporter.username : 'Unknown';
+                document.getElementById('ticketDueDate').textContent = data.due_date;
+
+                // Populate comments section
+                updateComments(data.comments);
+
+                // Populate attachments section
+                updateAttachments(data.attachments);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Adding Event Listener for Adding Comments
+    document.getElementById('addCommentButton').addEventListener('click', function (event) {
+        event.preventDefault();  // Prevent form from submitting normally
+
+        const ticketId = document.getElementById('currentTicketId').value;
+        const commentText = document.getElementById('commentText').value.trim();
+
+        if (!commentText) {
+            alert('Please enter a comment');
+            return;
+        }
+
+        fetch(`/tickets/${ticketId}/comment/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({
+                comment_text: commentText,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    document.getElementById('commentText').value = ''; // Clear the text area
+                    updateComments(data.comments); // Update comments section
+                } else {
+                    alert('Failed to add comment: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error posting comment');
+            });
+    });
+
+    // Adding Event Listener for Adding Attachments
+    document.getElementById('addAttachmentButton').addEventListener('click', function (event) {
+        event.preventDefault();  // Prevent form from submitting normally
+
+        const ticketId = document.getElementById('currentTicketId').value;
+        const fileInput = document.getElementById('attachmentFile');
+
+        if (!fileInput.files[0]) {
+            alert('Please select a file');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file_path', fileInput.files[0]);
+
+        fetch(`/tickets/${ticketId}/attachment/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    fileInput.value = ''; // Clear the file input
+                    updateAttachments(data.attachments); // Update attachments section
+                } else {
+                    alert('Failed to add attachment: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error uploading attachment');
+            });
+    });
+
+
+    // Utility function to update comments
+    function updateComments(comments) {
+        let commentsHTML = '';
+        if (comments && comments.length > 0) {
+            comments.forEach(comment => {
+                let commentDate = new Date(comment.created_at).toLocaleDateString();
+
+                commentsHTML += `
+                    <div class="comment mb-3 p-3 border rounded bg-light">
+                        <div class="comment-body">
+                            <h6 class="font-weight-bold mb-1">${comment.user}</h6>
+                            <small class="text-muted" style="font-size: 0.85rem;">${commentDate}</small>
+                            <p class="mb-0 fs-16 mt-1">${comment.comment_text}</p>
+                        </div>
+                    </div>`;
+            });
+        } else {
+            commentsHTML = '<p class="text-muted">No comments yet.</p>';
+        }
+        document.getElementById('ticketComments').innerHTML = commentsHTML;
+    }
+
+    // Utility function to update attachments
+    function updateAttachments(attachments) {
+        let attachmentsHTML = '';
+        if (attachments && attachments.length > 0) {
+            attachments.forEach(attachment => {
+                attachmentsHTML += `
+                    <div class="attachment-item mb-2">
+                        <a href="${attachment.file_path}" target="_blank" class="text-decoration-none">
+                            <i class="bx bx-paperclip"></i> ${attachment.file_path.split('/').pop()}
+                        </a>
+                        <small class="text-muted">Uploaded at: ${new Date(attachment.uploaded_at).toLocaleString()}</small>
+                    </div>`;
+            });
+        } else {
+            attachmentsHTML = '<p class="text-muted">No attachments available.</p>';
+        }
+        document.getElementById('ticketAttachments').innerHTML = attachmentsHTML;
+    }
+
+    // Utility function to get CSRF token for AJAX requests
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+</script>
+
+
+
+
+<!-- END MAIN CONTENT -->
+{% endblock %}

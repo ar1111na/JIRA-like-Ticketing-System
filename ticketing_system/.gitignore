@@ -1,1 +1,4 @@
-.pyc
+*.pyc
+__pycache__/
+db.sqlite3
+attachments/attachments/
