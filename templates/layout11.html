@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="fancy">Project Dashboard</h1>
+        </header>
+        <div class="metrics">
+            <!-- Card for Open Tickets -->
+            <div class="card" id="openTickets">
+                <h2>Open Tickets</h2>
+                <div>
+                    {% for post in dashboards %}
+                    <article class="dashboardcard">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.datecreated }}</p>
+                        <p>{{ post.comment }}</p>
+                        <p>{{ post.ticketsdtails }}</p>
+                        <span>{{ post.piority }}</span>
+                        <p>{{ post.Duedate }}</p>
+                    </article>
+                {% endfor %}
+                </div>
+                <p>0</p> <!-- This will display the number of open tickets -->
+                <a href="/">Home</a>
+                <a href="/dashboards">Dashborad</a>
+            </div>
+            <!-- Card for In Progress Tickets -->
+            <div class="card" id="inProgressTickets">
+                <h2>In Progress Tickets</h2>
+                <p>0</p> <!-- This will display the number of in-progress tickets -->
+            </div>
+            <!-- Card for Resolved Tickets -->
+            <div class="card" id="resolvedTickets">
+                <h2>Resolved Tickets</h2>
+                <p>0</p> <!-- This will display the number of resolved tickets -->
+            </div>
+            <!-- Card for Closed Tickets -->
+            <div class="card" id="closedTickets">
+                <h2>Closed Tickets</h2>
+                <p>0</p> <!-- This will display the number of closed tickets -->
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/main.js' %}" defer></script>
+    {% comment %} <script>
+        document.querySelectorAll('.dashboardcard').forEach(card => {
+            card.onmousedown = function(event) {
+                // Get the initial mouse position
+                let shiftX = event.clientX - card.getBoundingClientRect().left;
+                let shiftY = event.clientY - card.getBoundingClientRect().top;
+    
+                // Move the card
+                function moveAt(pageX, pageY) {
+                    card.style.left = pageX - shiftX + 'px';
+                    card.style.top = pageY - shiftY + 'px';
+                }
+    
+                // Initial move
+                moveAt(event.pageX, event.pageY);
+    
+                // Move when the mouse moves
+                function onMouseMove(event) {
+                    moveAt(event.pageX, event.pageY);
+                }
+    
+                // Listen to mousemove
+                document.addEventListener('mousemove', onMouseMove);
+    
+                // Drop the card on mouseup
+                card.onmouseup = function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    card.onmouseup = null;
+                };
+            };
+    
+            // Disable browser default drag behavior
+            card.ondragstart = function() {
+                return false;
+            };
+        });
+    </script>
+     {% endcomment %}
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboards</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="fancy">Jira-like Dashboard</h1>
+        </header>
+
+        <div class="sidebar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboards">Dashboards</a></li>
+                <li><a href="/metrics">Metrics</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="metrics">
+            <div class="card" id="openTickets" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Open Tickets</h2>
+                <div>
+                    {% for post in open_tickets %}
+                    <article class="dashboard" id="post_{{ post.id }}" draggable="true" ondragstart="drag(event)">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.datecreated }}</p>
+                        <p>{{ post.comment }}</p>
+                        <p>{{ post.ticketsdtails }}</p>
+                        <p>{{ post.status }}</p>
+                        <p>{{ post.Duedate }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card" id="inProgressTickets" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>In Progress Tickets</h2>
+                <div>
+                    {% for post in in_progress_tickets %}
+                    <article class="dashboard" id="post_{{ post.id }}" draggable="true" ondragstart="drag(event)">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.datecreated }}</p>
+                        <p>{{ post.comment }}</p>
+                        <p>{{ post.ticketsdtails }}</p>
+                        <p>{{ post.status }}</p>
+                        <p>{{ post.Duedate }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card" id="resolvedTickets" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Resolved Tickets</h2>
+                <div>
+                    {% for post in resolved_tickets %}
+                    <article class="dashboard" id="post_{{ post.id }}" draggable="true" ondragstart="drag(event)">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.datecreated }}</p>
+                        <p>{{ post.comment }}</p>
+                        <p>{{ post.ticketsdtails }}</p>
+                        <p>{{ post.status }}</p>
+                        <p>{{ post.Duedate }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card" id="closedTickets" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Closed Tickets</h2>
+                <div>
+                    {% for post in closed_tickets %}
+                    <article class="dashboard" id="post_{{ post.id }}" draggable="true" ondragstart="drag(event)">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.datecreated }}</p>
+                        <p>{{ post.comment }}</p>
+                        <p>{{ post.ticketsdtails }}</p>
+                        <p>{{ post.status }}</p>
+                        <p>{{ post.Duedate }}</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/main.js' %}" defer></script>
+</body>
+</html>
+
+
+
+
+
+
+
+ {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+{% comment %} 
+
+    </div> {% endcomment %}
