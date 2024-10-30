@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
 from django.contrib.auth.models import User 
+from django.db.models import Count
 
 
 # ViewSet for Ticket model to handle CRUD operations (API endpoints)
@@ -30,8 +31,22 @@ class AttachmentViewSet(viewsets.ModelViewSet):
 
 # Function-based view to list all tickets (HTML page)
 def ticket_list(request):
-    tickets = Ticket.objects.all()  # Retrieve all tickets from the database
-    return render(request, 'tickets/ticket_list.html', {'tickets': tickets})
+    tickets = Ticket.objects.all()
+    
+    # Get counts for different statuses
+    open_count = Ticket.objects.filter(status='Open').count()
+    in_progress_count = Ticket.objects.filter(status='In Progress').count()
+    resolved_count = Ticket.objects.filter(status='Resolved').count()
+    closed_count = Ticket.objects.filter(status='Closed').count()
+
+    context = {
+        'tickets': tickets,
+        'open_count': open_count,
+        'in_progress_count': in_progress_count,
+        'resolved_count': resolved_count,
+        'closed_count': closed_count,
+    }
+    return render(request, 'tickets/ticket_list.html', context)
 
 # Function-based view to add a new ticket
 @login_required
