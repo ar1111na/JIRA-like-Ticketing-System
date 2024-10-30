@@ -1,20 +1,26 @@
 from rest_framework import serializers
 from .models import Ticket, Comment, Attachment
 
-# Serializer for Ticket model
-class TicketSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ticket
-        fields = '__all__'
-
-# Serializer for Comment model
 class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username')  
+
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['user', 'comment_text', 'created_at']
 
-# Serializer for Attachment model
 class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment
-        fields = '__all__'
+        fields = ['file_path', 'uploaded_at']
+
+class TicketSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True, read_only=True)  
+    attachments = AttachmentSerializer(many=True, read_only=True)  
+
+    assignee = serializers.CharField(source='assignee.username', allow_null=True)
+    reporter = serializers.CharField(source='reporter.username')
+
+    class Meta:
+        model = Ticket
+        fields = ['title', 'description', 'priority', 'status', 'assignee', 'reporter', 'due_date', 'comments', 'attachments']
+
