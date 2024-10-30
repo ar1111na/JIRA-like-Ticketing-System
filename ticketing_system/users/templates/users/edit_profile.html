@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block content %}
+
+    <!-- MAIN CONTENT -->
+    {% block maintitle %}
+        <div class="main-title">
+            Edit Profile
+        </div>
+    {% endblock maintitle %}
+
+    <div class="main">
+        <div class="main-content">
+            <section class="profile-edit">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box">
+                            <div class="box-header d-flex justify-content-between">
+                                <div class="action-reg">
+                                    <h4 class="fs-30">Edit Profile</h4>
+                                    <a href="/users/profile/edit/">Update your profile information</a>
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="box-body">
+                                <div class="auth-content my-auto">
+                                    
+                                    <form method="post" class="mt-5 pt-2" action="/users/profile/edit/">
+                                        {% csrf_token %}
+                                        
+                                        <div class="mb-24">
+                                            <label for="first_name" class="form-label mb-14">First Name</label>
+                                            <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Enter your first name" value="{{ form.first_name.value|default_if_none:'' }}">
+                                            {% if form.first_name.errors %}
+                                                <div class="text-danger">{{ form.first_name.errors.0 }}</div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mb-24">
+                                            <label for="last_name" class="form-label mb-14">Last Name</label>
+                                            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Enter your last name" value="{{ form.last_name.value|default_if_none:'' }}">
+                                            {% if form.last_name.errors %}
+                                                <div class="text-danger">{{ form.last_name.errors.0 }}</div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mb-24">
+                                            <label for="phone_number" class="form-label mb-14">Phone Number</label>
+                                            <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Enter your phone number" value="{{ form.phone_number.value|default_if_none:'' }}">
+                                            {% if form.phone_number.errors %}
+                                                <div class="text-danger">{{ form.phone_number.errors.0 }}</div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <button class="btn bg-primary color-white w-100 fs-18 font-w500" type="submit">
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                    
+                                    <div class="mt-37 text-center">
+                                        <p class="text-muted mb-0 fs-14">Changed your mind? <a href="/users/profile/" class="text-primary fw-semibold">Go back to Profile</a></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT -->
+
+{% endblock %}
