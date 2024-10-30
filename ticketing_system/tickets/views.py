@@ -12,6 +12,8 @@ from django.utils.decorators import method_decorator
 import json
 from django.contrib.auth.models import User 
 from django.db.models import Count
+from django.utils.dateparse import parse_date
+from datetime import datetime
 
 
 # ViewSet for Ticket model to handle CRUD operations (API endpoints)
@@ -31,22 +33,47 @@ class AttachmentViewSet(viewsets.ModelViewSet):
 
 # Function-based view to list all tickets (HTML page)
 def ticket_list(request):
+    # Start with getting all tickets
     tickets = Ticket.objects.all()
-    
-    # Get counts for different statuses
-    open_count = Ticket.objects.filter(status='Open').count()
-    in_progress_count = Ticket.objects.filter(status='In Progress').count()
-    resolved_count = Ticket.objects.filter(status='Resolved').count()
-    closed_count = Ticket.objects.filter(status='Closed').count()
 
-    context = {
+    # Get filter values from the GET request
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    priority = request.GET.get('priority')
+
+    # Filter by "from_date" and "to_date"
+    if from_date:
+        try:
+            from_date_parsed = datetime.strptime(from_date, "%Y-%m-%d").date()
+            tickets = tickets.filter(created_at__date__gte=from_date_parsed)
+        except ValueError:
+            print(f"Invalid from_date format: {from_date}")
+
+    if to_date:
+        try:
+            to_date_parsed = datetime.strptime(to_date, "%Y-%m-%d").date()
+            tickets = tickets.filter(created_at__date__lte=to_date_parsed)
+        except ValueError:
+            print(f"Invalid to_date format: {to_date}")
+
+    # Priority Filtering
+    if priority and priority in ["High", "Medium", "Low", "Critical"]:
+        tickets = tickets.filter(priority=priority)
+
+    # Counts for the Cards
+    open_count = Ticket.objects.filter(status="Open").count()
+    in_progress_count = Ticket.objects.filter(status="In Progress").count()
+    resolved_count = Ticket.objects.filter(status="Resolved").count()
+    closed_count = Ticket.objects.filter(status="Closed").count()
+
+    # Pass the counts and tickets to the template
+    return render(request, 'tickets/ticket_list.html', {
         'tickets': tickets,
         'open_count': open_count,
         'in_progress_count': in_progress_count,
         'resolved_count': resolved_count,
-        'closed_count': closed_count,
-    }
-    return render(request, 'tickets/ticket_list.html', context)
+        'closed_count': closed_count
+    })
 
 # Function-based view to add a new ticket
 @login_required

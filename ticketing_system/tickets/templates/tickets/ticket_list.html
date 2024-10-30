@@ -25,6 +25,26 @@ Task List
     background: -webkit-linear-gradient(top, #2c94b6 0%, #a5d9e9 100%);
     background: linear-gradient(to bottom, #2c94b6 0%, #a5d9e9 100%);
 }
+
+.badge-primary {
+        background-color: rgba(51, 102, 255, 0.1); /* Adjust transparency similar to danger badge */
+        color: #3366ff; /* Match color to the darker blue for text */
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px 12px; /* Match padding */
+        border-radius: 6px; /* Match border-radius */
+}
+
+.badge-secondary {
+        background-color: rgba(198, 7, 255, 0.1); /* Adjust transparency similar to danger badge */
+        color: #6800a9; /* Match color to the darker blue for text */
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px 12px; /* Match padding */
+        border-radius: 6px; /* Match border-radius */
+}
 </style>
 
 <div class="main">
@@ -80,65 +100,66 @@ Task List
             <div class="col-12 col-xl-12">
                 <div class="box">
                     <div class="box-body pb-30">
-                        <div class="row">
-                            <div class="col-md-12 col-xl-10 mb-0">
-                                <div class="row">
-                                    <div class="col-md-12 col-xl-4 mb-0">
-                                        <div class="form-group"> <label class="form-label">From:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class='bx bx-calendar'></i> </div>
-                                                </div><input class="form-control fc-datepicker" placeholder="DD-MM-YYYY"
-                                                    type="text">
+                        <form method="get" action="" id="filterForm">
+                            <div class="row align-items-center">
+                                <!-- From Date -->
+                                <div class="col-md-3 col-lg-3 mb-0">
+                                    <div class="form-group">
+                                        <label class="form-label">From:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class='bx bx-calendar'></i></div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-xl-4 mb-0">
-                                        <div class="form-group"> <label class="form-label">To:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class='bx bx-calendar'></i> </div>
-                                                </div><input class="form-control fc-datepicker" placeholder="DD-MM-YYYY"
-                                                    type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-xl-4 mb-0">
-                                        <div class="form-group"> <label class="form-label">Select Priority:</label>
-                                            <select name="attendance"
-                                                class="form-control custom-select select2 select2-hidden-accessible"
-                                                data-placeholder="Select Priority" tabindex="-1" aria-hidden="true"
-                                                data-select2-id="select2-data-16-akyu">
-                                                <option label="Select Priority" data-select2-id="select2-data-18-ezae">
-                                                </option>
-                                                <option value="1">High</option>
-                                                <option value="2">Medium</option>
-                                                <option value="3">Low</option>
-                                            </select>
-                                            <span class="select2 select2-container select2-container--default" dir="ltr"
-                                                data-select2-id="select2-data-17-6y8j" style="width: 100%;"><span
-                                                    class="selection"><span
-                                                        class="select2-selection select2-selection--single"
-                                                        role="combobox" aria-haspopup="true" aria-expanded="false"
-                                                        tabindex="0" aria-disabled="false"
-                                                        aria-labelledby="select2-attendance-ws-container"
-                                                        aria-controls="select2-attendance-ws-container"><span
-                                                            class="select2-selection__rendered"
-                                                            id="select2-attendance-ws-container" role="textbox"
-                                                            aria-readonly="true" title="Select Priority"></span>
-                                                        <span class="select2-selection__arrow" role="presentation"><b
-                                                                role="presentation"></b></span>
-                                                    </span>
-                                                </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                            <input name="from_date" class="form-control fc-datepicker" placeholder="YYYY-MM-DD" type="date">
                                         </div>
                                     </div>
                                 </div>
+                        
+                                <!-- To Date -->
+                                <div class="col-md-3 col-lg-3 mb-0">
+                                    <div class="form-group">
+                                        <label class="form-label">To:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class='bx bx-calendar'></i></div>
+                                            </div>
+                                            <input name="to_date" class="form-control fc-datepicker" placeholder="YYYY-MM-DD" type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Select Priority -->
+                                <div class="col-md-3 col-lg-3 mb-0">
+                                    <div class="form-group">
+                                        <label class="form-label">Select Priority:</label>
+                                        <select name="priority" class="form-control custom-select select2">
+                                            <option value="">Select Priority</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div>
+                        
+                                <!-- Search Button -->
+                                <div class="col-md-2 col-lg-2 mb-0">
+                                    <div class="form-group mt-32">
+                                        <button type="submit" class="btn bg-primary btn-block color-white">Search</button>
+                                    </div>
+                                </div>
+                        
+                                <!-- Reset Button -->
+                                <div class="col-md-2 col-lg-1 mb-0">
+                                    <div class="form-group mt-32">
+                                        <a href="{% url 'ticket_list' %}" class="btn btn-secondary btn-block">Reset</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-12 col-xl-2 mb-0">
-                                <div class="form-group mt-32"> <a href="#"
-                                        class="btn bg-primary btn-block color-white">Search</a> </div>
-                            </div>
-                        </div>
+                        </form>
+                        
+                                                
+                    <p></p>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
