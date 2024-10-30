@@ -442,48 +442,54 @@
                         <div class="box-footer pt-38">
                             <div class="btn-list text-center">
                                 <a href="#" class="btn btn-light"><i class='bx bxs-envelope' ></i> </a>
-                                <a href="#" class="btn btn-light"> <i class='bx bxs-message-alt-edit'></i> </a>
+                                <a href="/users/profile/edit/" class="btn btn-light"> <i class='bx bxs-message-alt-edit'></i> </a>
                             </div>
                         </div>
                     </div>
                     <div class="box left-dot pt-39 mb-30">
-                        <div class="box-header  border-0 ">
+                        <div class="box-header border-0">
                             <div class="box-title fs-20 font-w600">Basic Info</div>
                         </div>
                         <div class="box-body pt-16 user-profile">
-                            <div class="table-responsive">
-                                <table class="table mb-0 mw-100 color-span">
-                                    <tbody>
-                                        <tr>
-                                            <td class="py-2 px-0"> <span class="w-50">First name</span> </td>
-                                            <td>:</td>
-                                            <td class="py-2 px-0"> <span class="">Test Name</span> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-0"> <span class="w-50">Last name</span> </td>
-                                            <td>:</td>
-                                            <td class="py-2 px-0"> <span class="">Test</span> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-0"> <span class="w-50">Designation</span> </td>
-                                            <td>:</td>
-                                            <td class="py-2 px-0"> <span class="">Sr. Designer</span> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-0"> <span class="w-50">Join Date</span> </td>
-                                            <td>:</td>
-                                            <td class="py-2 px-0"> <span class="">25 - 12 - 2022</span> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-0"> <span class="w-50">Phone Number</span> </td>
-                                            <td>:</td>
-                                            <td class="py-2 px-0"> <span class="">+11 05986 2359 03</span> </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            {% if profile %}
+                                <div class="table-responsive">
+                                    <table class="table mb-0 mw-100 color-span">
+                                        <tbody>
+                                            <tr>
+                                                <td class="py-2 px-0"><span class="w-50">First name</span></td>
+                                                <td>:</td>
+                                                <td class="py-2 px-0"><span class="">{{ profile.first_name }}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-2 px-0"><span class="w-50">Last name</span></td>
+                                                <td>:</td>
+                                                <td class="py-2 px-0"><span class="">{{ profile.last_name }}</span></td>
+                                            </tr>
+                                            {% comment %} <tr>
+                                                <td class="py-2 px-0"><span class="w-50">Designation</span></td>
+                                                <td>:</td>
+                                                <td class="py-2 px-0"><span class="">{{ profile.role }}</span></td>
+                                            </tr> {% endcomment %}
+                                            <tr>
+                                                <td class="py-2 px-0"><span class="w-50">Join Date</span></td>
+                                                <td>:</td>
+                                                <td class="py-2 px-0"><span class="">{{ user.date_joined|date:"F j, Y" }}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-2 px-0"><span class="w-50">Phone Number</span></td>
+                                                <td>:</td>
+                                                <td class="py-2 px-0"><span class="">{{ profile.phone_number }}</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p>No profile information available.</p> <!-- Message for users without a profile -->
+                            {% endif %}
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
 
@@ -491,5 +497,4 @@
         </div>
     </div>
     <!-- END MAIN CONTENT -->
-
 {% endblock  %}
