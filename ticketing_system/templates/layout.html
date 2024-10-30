@@ -72,6 +72,13 @@
                                 Dashboard
                             </a>
                         </li>
+                        {% if user.is_authenticated %}
+                        <li>
+                            <a href="/tickets/">
+                               All Tickets
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </li>
                 <li class="sidebar-submenu">
