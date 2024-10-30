@@ -8,6 +8,8 @@ urlpatterns = [
     path('login/', views.login_view),
     path('logout/', views.logout_view),
     path('profile/', views.profile_view),
+    path("profile/edit/", views.edit_profile),
+
 
     # Password reset URLs
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),

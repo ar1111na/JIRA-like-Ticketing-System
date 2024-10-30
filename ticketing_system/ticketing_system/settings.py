@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',         # Your user management app
+    'users.apps.UsersConfig', # Your user management app
     'tickets',       # Your ticket management app
     'dashboard',     # Your dashboard app
     'rest_framework',

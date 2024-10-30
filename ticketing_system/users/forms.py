@@ -1,4 +1,5 @@
 from django import forms
+from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -50,3 +51,10 @@ class CustomAuthenticationForm(AuthenticationForm):
                 raise forms.ValidationError("Invalid username or password.")
         
         return self.cleaned_data
+
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'phone_number']  # Add other fields as needed
