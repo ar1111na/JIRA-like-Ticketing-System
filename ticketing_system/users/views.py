@@ -4,6 +4,7 @@ from django.contrib.auth import login,logout
 from .forms import CustomUserCreationForm,ProfileForm
 from .models import Profile
 from django.contrib.auth.decorators import login_required
+from tickets.views import Ticket   # Import for the table ticket view
 
 
 # Create your views here.
@@ -49,17 +50,53 @@ def logout_view(request):
         logout(request)
         return redirect("/")
     
-@login_required(login_url='/users/login/')  
+@login_required(login_url='/users/login/')
 def profile_view(request):
     user = request.user
     try:
         profile = Profile.objects.get(user=user)
     except Profile.DoesNotExist:
-        profile = None  # Optional: Handle the case where the profile doesn't exist
+        profile = None
+
+    # Get tickets assigned to the current user for the table ticket view
+    assigned_tickets = Ticket.objects.filter(assignee=user)
+
+    # Counters for different ticket statuses for the table ticket view
+    open_count_p = assigned_tickets.filter(status="Open").count()
+    in_progress_count_p = assigned_tickets.filter(status="In Progress").count()
+    resolved_count_p = assigned_tickets.filter(status="Resolved").count()
+    closed_count_p = assigned_tickets.filter(status="Closed").count()
+
+    # Define the total number of tasks, including those in different statuses for the table ticket view
+    total_task_count = assigned_tickets.count()
+    running_task_count = in_progress_count_p
+    on_hold_task_count = resolved_count_p
+    complete_task_count = closed_count_p
+
+    # Apply filters if provided for the table ticket view for the table ticket view
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    priority = request.GET.get('priority')
+
+    if from_date:
+        assigned_tickets = assigned_tickets.filter(created_at__gte=from_date)
+    if to_date:
+        assigned_tickets = assigned_tickets.filter(due_date__lte=to_date)
+    if priority:
+        assigned_tickets = assigned_tickets.filter(priority=priority)
 
     context = {
         'user': user,
         'profile': profile,
+        'assigned_tickets': assigned_tickets, # for the table ticket view
+        'total_task_count': total_task_count, # total number of assigned tickets for the table ticket view
+        'running_task_count': running_task_count, # number of running tickets for the table ticket view
+        'on_hold_task_count': on_hold_task_count, # number of tickets on hold for the table ticket view
+        'complete_task_count': complete_task_count, # number of completed tickets for the table ticket view
+        'open_count_p': open_count_p, # for the table ticket view
+        'in_progress_count_p': in_progress_count_p, # for the table ticket view
+        'resolved_count_p': resolved_count_p, # for the table ticket view
+        'closed_count_p': closed_count_p, # for the table ticket view
     }
     return render(request, 'users/profile.html', context)
 
