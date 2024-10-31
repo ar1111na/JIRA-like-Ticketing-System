@@ -20,13 +20,13 @@ Task List
     }
 
     .bg-icon-4 {
-    background: #2c94b6;
-    background: -moz-linear-gradient(top, #2c94b6 0%, #a5d9e9 100%);
-    background: -webkit-linear-gradient(top, #2c94b6 0%, #a5d9e9 100%);
-    background: linear-gradient(to bottom, #2c94b6 0%, #a5d9e9 100%);
-}
+        background: #2c94b6;
+        background: -moz-linear-gradient(top, #2c94b6 0%, #a5d9e9 100%);
+        background: -webkit-linear-gradient(top, #2c94b6 0%, #a5d9e9 100%);
+        background: linear-gradient(to bottom, #2c94b6 0%, #a5d9e9 100%);
+    }
 
-.badge-primary {
+    .badge-primary {
         background-color: rgba(51, 102, 255, 0.1); /* Adjust transparency similar to danger badge */
         color: #3366ff; /* Match color to the darker blue for text */
         font-family: 'Poppins', sans-serif;
@@ -34,9 +34,9 @@ Task List
         font-weight: 600;
         padding: 5px 12px; /* Match padding */
         border-radius: 6px; /* Match border-radius */
-}
+    }
 
-.badge-secondary {
+    .badge-secondary {
         background-color: rgba(198, 7, 255, 0.1); /* Adjust transparency similar to danger badge */
         color: #6800a9; /* Match color to the darker blue for text */
         font-family: 'Poppins', sans-serif;
@@ -44,7 +44,21 @@ Task List
         font-weight: 600;
         padding: 5px 12px; /* Match padding */
         border-radius: 6px; /* Match border-radius */
-}
+    }
+
+    /* Add hover effect to move the .icon elements when hovering over the icon-box (the entire card) */
+    .icon-box {
+        transition: all 0.3s ease; /* Smooth transition for the card hover effect */
+    }
+
+    .icon-box:hover .icon {
+        transform: translateY(-10px); /* Moves the icon upwards by 10 pixels when the entire card is hovered */
+        transition: transform 0.3s ease; /* Smooth transition for the icon movement upwards */
+    }
+
+    .icon {
+        transition: transform 0.6s ease; /* Slower transition back down when not hovered */
+    }
 </style>
 
 <div class="main">
@@ -55,7 +69,7 @@ Task List
                     <!-- Open Tickets Card -->
                     <div class="icon-box bg-color-1">
                         <div class="icon bg-icon-1">
-                            <i class="bx bxs-bell"></i>
+                            <i class="bx bxs-briefcase"></i>
                         </div>
                         <div class="content">
                             <h5 class="title-box">Open Tickets</h5>
@@ -65,7 +79,7 @@ Task List
                     <!-- In Progress Tickets Card -->
                     <div class="icon-box bg-color-2">
                         <div class="icon bg-icon-2">
-                            <i class="bx bxs-bell"></i>
+                            <i class="bx bx-task"></i>
                         </div>
                         <div class="content">
                             <h5 class="title-box">In Progress Tickets</h5>
@@ -75,7 +89,7 @@ Task List
                     <!-- Resolved Tickets Card -->
                     <div class="icon-box bg-color-3">
                         <div class="icon bg-icon-3">
-                            <i class="bx bxs-bell"></i>
+                            <i class="bx bx-block"></i>
                         </div>
                         <div class="content">
                             <h5 class="title-box">Resolved Tickets</h5>
@@ -85,7 +99,7 @@ Task List
                     <!-- Closed Tickets Card -->
                     <div class="icon-box bg-color-4">
                         <div class="icon bg-icon-4">
-                            <i class="bx bxs-bell"></i>
+                            <i class="bx bx-task color-white"></i>
                         </div>
                         <div class="content">
                             <h5 class="title-box">Closed Tickets</h5>
