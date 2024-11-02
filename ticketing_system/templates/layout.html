@@ -335,10 +335,48 @@
             {% block content %}
             {% endblock %}
         </main>
+        
+        <!-- SCRIPT FOR Notifications -->
+                 <!-- SCRIPT -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const userId = {{ request.user.id }};
+                const socket = new WebSocket(`ws://${window.location.host}/ws/notifications/${userId}/`);
+        
+                socket.onmessage = function (event) {
+                    const data = JSON.parse(event.data);
+                    const notificationMessage = data.message;
+        
+                    showNotificationPopup(notificationMessage);
+                };
+        
+                socket.onclose = function () {
+                    console.error("WebSocket closed unexpectedly");
+                };
+        
+                // Pop-up function
+        
+                
+                function showNotificationPopup(message) {
+                    const popup = document.createElement("div");
+                    popup.className = "popup-notification";
+                    popup.innerHTML = `
+                        <div class="icon">
+                            <i class="bx bxs-bell bx-tada bx-tada"></i>
+                        </div>
+                        <div class="content">
+                            <h5 class="title-box">Notification</h5>
+                            <p>${message}</p>
+                        </div>
+                    `;
+                    document.body.appendChild(popup);
+                    
+                    setTimeout(() => popup.remove(), 5000); // Auto-remove after 5 seconds
+                }
+        
+            });
+        </script>
     
-
-    <div class="overlay"></div>
-
 
         <!-- SCRIPT -->
         <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
