@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block title %}
+ Notifications
+{% endblock %}
+
+{% block content %}
+
+{% block maintitle %}
+<div class="main-title">
+    Your Notifications
+</div>
+{% endblock maintitle %}
+
+<div class="main">
+    <div class="main-content user">
+        <div class="row">
+            <div class="col-12 col-xl-12">
+                <div class="box card-box mb-20">
+                    <div class="container mt-4">
+                      <a style="margin-bottom:14px" href="/users/profile/"><h4>Check your tickets</h4></a>  
+                        <div id="notifications-list" class="notification-tapestry">
+                            {% for notification in notifications %}
+                                <div class="notification-card {% if not notification.is_read %}bg-highlight{% endif %}">
+                                    <div class="notification-content" onclick="markAsRead({{ notification.id }})">
+                                        <span class="notification-message">{{ notification.message }}</span>
+                                        <span class="badge {% if notification.ticket.priority == 'High' %}badge-danger-light{% elif notification.ticket.priority == 'Medium' %}badge-warning-light{% elif notification.ticket.priority == 'Low' %}badge-success-light{% elif notification.ticket.priority == 'Critical' %}badge-danger{% endif %}">
+                                            {{ notification.ticket.priority }}
+                                        </span>
+                                    </div>
+                                    <div class="notification-timestamp">
+                                        <small>{{ notification.created_at|date:"d-m-Y H:i" }}</small>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="text-center">No notifications.</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const userId = {{ request.user.id }};
+
+    const socket = new WebSocket(`ws://${window.location.host}/ws/notifications/${userId}/`);
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        const notificationMessage = data.message;
+        const ticketPriority = data.ticket_priority;
+        const createdAt = data.created_at;
+
+        const notificationItem = document.createElement('div');
+        notificationItem.className = 'notification-card bg-highlight';
+        notificationItem.innerHTML = `
+            <div class="notification-content" onclick="markAsRead(${data.notification_id})">
+                <span class="notification-message">${notificationMessage}</span>
+                <span class="badge ${ticketPriority === 'High' ? 'badge-danger-light' : ticketPriority === 'Medium' ? 'badge-warning-light' : ticketPriority === 'Low' ? 'badge-success-light' : 'badge-danger'}">${ticketPriority}</span>
+            </div>
+            <div class="notification-timestamp">
+                <small>${new Date(createdAt).toLocaleString()}</small>
+            </div>
+        `;
+
+        document.getElementById('notifications-list').appendChild(notificationItem);
+    };
+
+    function markAsRead(notificationId) {
+        fetch(`/notifications/mark-as-read/${notificationId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        }).then(response => {
+            if (response.ok) {
+                document.querySelector(`[onclick="markAsRead(${notificationId})"]`).closest('.notification-card').classList.remove('bg-highlight');
+            }
+        }).catch(error => console.error('Error:', error));
+    }
+
+    socket.onclose = function(event) {
+        console.error('WebSocket closed unexpectedly');
+    };
+</script>
+
+<style>
+    .notification-tapestry {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .notification-card {
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .notification-card:hover {
+        transform: scale(1.02);
+    }
+    .notification-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .notification-timestamp {
+        text-align: right;
+        color: #777;
+    }
+    .bg-highlight {
+        background-color: #e0f3ff;
+    }
+</style>
+{% endblock %}
