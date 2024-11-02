@@ -28,6 +28,8 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('api/', include('tickets.urls')),  # Include API routes
     path('tickets/', include('tickets.urls')),   # Include HTML routes for ticket management
+    path('notifications/', include('ticket_notifications.urls')),
+
     #path('dashboard/', include('dashboard.urls')),
 ]
 

@@ -40,6 +40,61 @@
 
 <body class="sidebar-expand">
 <!-- CSS for maintaining the space -->
+
+
+<style>
+    .badge-pill {
+        padding: 0.4em 0.6em;
+        margin-left: 10px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        color: #fff;
+        background-color: #ff0000;
+    }
+    .popup-notification {
+        position: fixed;
+        bottom: 20px; /* Adjust as needed */
+        right: 20px; /* Adjust as needed */
+        background-color: #ffffff;
+        color: #333;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        animation: slideUp 0.3s ease;
+        width: 400px;
+        transition: all 0.3s ease;
+    }
+    
+    
+    .popup-notification .icon {
+        font-size: 30px; /* Larger icon size */
+        margin-right: 15px; /* More space between icon and message */
+    }
+
+    .popup-notification .content {
+        flex-grow: 1; /* Allow content to take available space */
+    }
+
+    .popup-notification .title-box {
+        font-size: 1.25rem; /* Larger title */
+        margin-bottom: 10px; /* Space below title */
+    }
+
+    .popup-notification p {
+        font-size: 1rem; /* Larger message text */
+    }
+
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
     
     <!-- SIDEBAR -->
     <div class="sidebar">
@@ -118,12 +173,18 @@
                     </a>
                 </li>
 
+                {% load notification_tags %}               
                 <li>
-                    <a href="message.html">
-                        <i class='bx bxs-message-rounded-detail' ></i>
-                        <span>Message</span>
+                    <a href="/notifications/">
+                        <i class='bx bxs-message-rounded-detail'></i>
+                        <span>Notifications </span>
+                        {% if request.user.is_authenticated %}
+                            <span class="badge badge-pill badge-danger float-end">{% unread_notifications_count request.user %}</span>
+                        {% endif %}
                     </a>
                 </li>
+
+
                 <li class="sidebar-submenu">
                     <a href="/users/profile/" class="sidebar-menu-dropdown">
                         <i class='bx bxs-user'></i>
@@ -274,10 +335,48 @@
             {% block content %}
             {% endblock %}
         </main>
+        
+        <!-- SCRIPT FOR Notifications -->
+                 <!-- SCRIPT -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const userId = {{ request.user.id }};
+                const socket = new WebSocket(`ws://${window.location.host}/ws/notifications/${userId}/`);
+        
+                socket.onmessage = function (event) {
+                    const data = JSON.parse(event.data);
+                    const notificationMessage = data.message;
+        
+                    showNotificationPopup(notificationMessage);
+                };
+        
+                socket.onclose = function () {
+                    console.error("WebSocket closed unexpectedly");
+                };
+        
+                // Pop-up function
+        
+                
+                function showNotificationPopup(message) {
+                    const popup = document.createElement("div");
+                    popup.className = "popup-notification";
+                    popup.innerHTML = `
+                        <div class="icon">
+                            <i class="bx bxs-bell bx-tada bx-tada"></i>
+                        </div>
+                        <div class="content">
+                            <h5 class="title-box">Notification</h5>
+                            <p>${message}</p>
+                        </div>
+                    `;
+                    document.body.appendChild(popup);
+                    
+                    setTimeout(() => popup.remove(), 5000); // Auto-remove after 5 seconds
+                }
+        
+            });
+        </script>
     
-
-    <div class="overlay"></div>
-
 
         <!-- SCRIPT -->
         <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>

@@ -31,17 +31,29 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users.apps.UsersConfig', # Your user management app
-    'tickets',       # Your ticket management app
-    'dashboard',     # Your dashboard app
+    'users.apps.UsersConfig', 
+    'tickets',       
+    'dashboard',    
+    'ticket_notifications',
     'rest_framework',
 ]
+
+ASGI_APPLICATION = 'ticketing_system.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
