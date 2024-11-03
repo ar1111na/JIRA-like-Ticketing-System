@@ -10,9 +10,7 @@ Version      : 3.6
 
 
 $(document).ready(function() {
-
-
-
+//this is Ben part
     if ($('.kanban-wrap').length > 0) {
         $(".kanban-wrap").sortable({
             connectWith: ".kanban-wrap",

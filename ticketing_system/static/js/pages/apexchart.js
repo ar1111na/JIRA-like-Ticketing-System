@@ -1,4 +1,5 @@
-// let line_chart = {
+// Ben comment all these
+//let line_chart = {
 //     series: [{
 //         name: "Complete",
 //         data: [40, 70, 20, 90, 36, 80, 30, 91, 60]
