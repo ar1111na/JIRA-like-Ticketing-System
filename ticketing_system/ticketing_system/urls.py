@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
+    path('calendar/', views.calendar_view),
     path('users/', include('users.urls')),
     path('api/', include('tickets.urls')),  # Include API routes
     path('tickets/', include('tickets.urls')),   # Include HTML routes for ticket management
