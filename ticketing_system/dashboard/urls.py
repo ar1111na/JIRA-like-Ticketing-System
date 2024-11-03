@@ -1,7 +1,15 @@
 from django.urls import path
 from . import views
+from .views import (
+    board, metrics
+)
+
+
 
 urlpatterns = [
-    # Add some basic URL to avoid errors, for example, a simple homepage for tickets
-    path('', views.home, name='test'),
-]
+     path('', views.dashboard),
+     path('metrics/', metrics, name='metrics'),
+     path('board/', board, name='board'),
+     path('update_ticket_status/', views.update_ticket_status, name='update_ticket_status'),
+ ]
+  
