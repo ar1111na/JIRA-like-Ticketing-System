@@ -24,13 +24,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.homepage),
+    # path('', views.homepage), #no need yet
     path('calendar/', views.calendar_view),
     path('users/', include('users.urls')),
     path('api/', include('tickets.urls')),  # Include API routes
     path('tickets/', include('tickets.urls')),   # Include HTML routes for ticket management
     path('notifications/', include('ticket_notifications.urls')),
-    path('dashboard/', include('dashboard.urls')),
+    path('', include('dashboard.urls')),
 ]
 
 # Add static media URL configuration
