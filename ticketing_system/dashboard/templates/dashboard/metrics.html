@@ -1,0 +1,374 @@
+
+
+{% extends 'layout.html' %}
+
+{% block title%}
+     Metrics
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+ <!-- Main Header -->
+ <div class="main-header">
+    <div class="d-flex">
+        <div class="mobile-toggle" id="mobile-toggle">
+            <i class='bx bx-menu'></i>
+        </div>
+        <div class="main-title">
+            Metrics
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center">
+
+        <!-- App Search-->
+        <form class="app-search d-none d-lg-block">
+            <div class="position-relative">
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="bx bx-search-alt"></span>
+            </div>
+        </form>
+        <div class="dropdown d-inline-block d-lg-none ms-2">
+            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class='bx bx-search-alt' ></i>
+                </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-search-dropdown">
+
+                <form class="p-3">
+                    <div class="form-group m-0">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary h-100" type="submit"><i class='bx bx-search-alt' ></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+{% comment %} 
+        <div class="dropdown d-inline-block">
+            <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="btn dropdown-toggle" id="header-lang-img">
+                        EN 
+                        <i class='bx bx-caret-down'></i>
+                    </span>
+                </button>
+            <div class="dropdown-menu dropdown-menu-end">
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="en">
+                    <img src="./images/flags/us.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
+                </a>
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
+                    <img src="./images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                </a>
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
+                    <img src="./images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                </a>
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
+                    <img src="./images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                </a>
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
+                    <img src="./images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                </a>
+            </div>
+        </div> {% endcomment %}
+        <!-- <div class="dropdown d-none d-lg-inline-block ms-1">
+            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                    <i class="bx bx-fullscreen"></i>
+                </button>
+        </div> -->
+        <div class="dropdown d-inline-block mt-12">
+            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src="./images/profile/profile.png"
+                        alt="Header Avatar">
+                    <span class="pulse-css"></span>
+                    <span class="info d-xl-inline-block  color-span">
+                        <span class="d-block fs-20 font-w600">Benjamin</span>
+                        <span class="d-block mt-7" >benjamin@gmail.com</span>
+                    </span>
+                        
+                    <i class='bx bx-chevron-down'></i>
+                </button>
+            <div class="dropdown-menu dropdown-menu-end">
+                <!-- item-->
+                <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span>Profile</span></a>
+                <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span>My Wallet</span></a>
+                <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span>Settings</span></a>
+                <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span>Lock screen</span></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" href="user-login.html"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span>Logout</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Main Header -->
+
+<!-- MAIN CONTENT 11-->
+
+
+<div class="main">
+    <div class="main-content">
+        <div class="row">
+
+            <div class="col-6 col-md-6 col-sm-12">
+                <div class="box left-dot h-100">
+                    <div class="box-title">Line Charts</div>
+                    <div class="box-body">
+                        <div id="line-chart"></div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-6 col-md-6 col-sm-12">
+                <div class="box left-dot h-100">
+                    <div class="box-title">Area Charts</div>
+                    <div class="box-body">
+                        <div id="area-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6 col-sm-12">
+                <div class="box left-dot h-100">
+                    <div class="box-title">Column Charts</div>
+                    <div class="box-body">
+                        <div id="column-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6 col-sm-12">
+                <div class="box left-dot h-100">
+                    <div class="box-title">Pie Charts</div>
+                    <div class="box-body">
+                        <div id="pie-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6 col-sm-12">
+                <div class="box left-dot h-100">
+                    <div class="box-title">Polar Area Charts</div>
+                    <div class="box-body">
+                        <div id="polar-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6 col-sm-12">
+                <div class="box left-dot h-100">
+                    <div class="box-title">Radar Charts</div>
+                    <div class="box-body">
+                        <div id="radar-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- END MAIN CONTENT -->
+
+
+<!-- MAIN CONTENT -->
+<div class="main">
+   
+       <!-- Priority Pie Chart -->
+       <div class="col-6 col-md-12">
+           <div class="box">
+               <div class="box-header">
+                   <div class="me-auto">
+                       <h4 class="card-title fs-22">Priority Chart</h4>
+                       <p class="fs-14 mt-4">These are the details</p>
+                   </div>
+               </div>
+               <div class="box-body pt-0">
+                   <div class="row">
+                       <div class="col-6 col-xl-12 col-md-6 col-sm-12 w-sm-100 mb-0">
+                           <ul class="box-list mt-25 pr-60">
+                               <li><span class="bg-blue square"></span>Low<span>({{ priority_counts.Low.percentage }}%)</span></li>
+                               <li><span class="bg-success square"></span>Medium<span>({{ priority_counts.Medium.percentage }}%)</span></li>
+                               <li><span class="bg-warning square"></span>High<span>({{ priority_counts.High.percentage }}%)</span></li>
+                               <li><span class="square" style="background-color: red;"></span>Critical<span>({{ priority_counts.Critical.percentage }}%)</span></li>
+                           </ul>
+                       </div>
+                       <div class="col-6 col-xl-12 col-md-6 col-sm-12 w-sm-100 mb-0">
+                           <div class="canvas-container">
+                               <canvas id="chartjs-4" class="chartjs" width="100" height="100"></canvas>
+                               <div class="chart-data">
+                                   <div data-percent="{{ priority_counts.Low.percentage }}" data-color="#3C21F7" data-label="Low"></div>
+                                   <div data-percent="{{ priority_counts.Medium.percentage }}" data-color="#00BC8B" data-label="Medium"></div>
+                                   <div data-percent="{{ priority_counts.High.percentage }}" data-color="#FFB800" data-label="High"></div>
+                                   <div data-percent="{{ priority_counts.Critical.percentage }}" data-color="#ff0000" data-label="Critical"></div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   </div>
+   <!-- END MAIN CONTENT -->
+
+
+
+   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> 
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Filter table rows and Kanban items by priority
+        const priorityFilter = document.getElementById("priorityFilter");
+        const tableRows = document.querySelectorAll("#task-profile tbody tr");
+        const kanbanItems = document.querySelectorAll(".kanban-wrap .panel"); // Selects each Kanban item panel
+    
+        priorityFilter.addEventListener("change", function() {
+            const selectedPriority = priorityFilter.value;
+    
+            // Filter table rows
+            tableRows.forEach(row => {
+                const rowPriority = row.querySelector("td:nth-child(3) span").textContent.trim();
+                row.style.display = selectedPriority === "" || rowPriority === selectedPriority ? "" : "none";
+            });
+    
+            // Filter Kanban items
+            kanbanItems.forEach(item => {
+                const itemPriority = item.querySelector(".badge").textContent.trim();
+                item.style.display = selectedPriority === "" || itemPriority === selectedPriority ? "" : "none";
+            });
+        });
+
+        // Bar chart for priority counts using Chart.js
+        const priorityData = {
+            Low: {{ priority_counts.Low.count }},
+            Medium: {{ priority_counts.Medium.count }},
+            High: {{ priority_counts.High.count }},
+            Critical: {{ priority_counts.Critical.count }}
+        };
+        
+        const ctx = document.getElementById('priority-bar-chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Low', 'Medium', 'High', 'Critical'],
+                datasets: [{
+                    label: 'Priority Count',
+                    data: [priorityData.Low, priorityData.Medium, priorityData.High, priorityData.Critical],
+                    backgroundColor: ['#3C21F7', '#00BC8B', '#FFB800', '#ff0000']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Tasks'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Priority Levels'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Drag-and-drop functionality     -- line chart
+  
+    });
+
+
+      
+ // Assuming priority counts are passed from the view
+ const priorityCounts = {{ priority_counts|safe }};
+ const categories = Object.keys(priorityCounts);
+ const seriesData = Object.values(priorityCounts).map(p => p.count);
+
+ // Line Chart
+ var lineOptions = {
+     chart: { type: 'line' },
+     series: [{ name: "Tickets", data: seriesData }],
+     xaxis: { categories: categories }
+ };
+ var lineChart = new ApexCharts(document.querySelector("#line-chart"), lineOptions);
+ lineChart.render();
+
+ // Area Chart
+ var areaOptions = {
+     chart: { type: 'area' },
+     series: [{ name: "Tickets", data: seriesData }],
+     xaxis: { categories: categories }
+ };
+ var areaChart = new ApexCharts(document.querySelector("#area-chart"), areaOptions);
+ areaChart.render();
+
+ // Column Chart
+ var columnOptions = {
+     chart: { type: 'bar' },
+     series: [{ name: "Tickets", data: seriesData }],
+     xaxis: { categories: categories }
+ };
+ var columnChart = new ApexCharts(document.querySelector("#column-chart"), columnOptions);
+ columnChart.render();
+
+ // Pie Chart
+ var pieOptions = {
+     chart: { type: 'pie' },
+     series: seriesData,
+     labels: categories
+ };
+ var pieChart = new ApexCharts(document.querySelector("#pie-chart"), pieOptions);
+ pieChart.render();
+
+ // Polar Area Chart (similar to pie, but with equal radius segments)
+ var polarOptions = {
+     chart: { type: 'polarArea' },
+     series: seriesData,
+     labels: categories
+ };
+ var polarChart = new ApexCharts(document.querySelector("#polar-chart"), polarOptions);
+ polarChart.render();
+
+ // Radar Chart
+ var radarOptions = {
+     chart: { type: 'radar' },
+     series: [{ name: "Tickets", data: seriesData }],
+     xaxis: { categories: categories }
+ };
+ var radarChart = new ApexCharts(document.querySelector("#radar-chart"), radarOptions);
+ radarChart.render();
+
+
+
+</script>
+
+
+{% comment %}     
+       let pieChartData = {
+        series: [
+            {{ priority_counts.Low.count }},
+            {{ priority_counts.Medium.count }},
+            {{ priority_counts.High.count }},
+            {{ priority_counts.Critical.count }}
+        ],
+        labels: ['Low', 'Medium', 'High', 'Critical']
+    }; {% endcomment %}
+{% endblock %}
+   
+   
