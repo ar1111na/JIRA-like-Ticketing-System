@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 #from .models import Ticket
 from tickets.models import Ticket
 import json
+from django.contrib.auth.decorators import login_required
+
 
 def count_priorities():
     total_tickets = Ticket.objects.count()  # Total number of tickets
@@ -27,6 +29,9 @@ def count_priorities():
 
     return counts_and_percentages
 
+
+
+@login_required(login_url='/users/login/')  
 def dashboard(request):
     tickets = Ticket.objects.all()
     priority_counts = count_priorities()  # Get counts and percentages
@@ -61,7 +66,7 @@ def update_ticket_status(request):
     return JsonResponse({"status": "error", "message": "Invalid request"})
 
 
-
+@login_required(login_url='/users/login/')  
 def metrics(request):
     tickets = Ticket.objects.all()
     priority_counts = count_priorities()  # Get counts and percentages
@@ -80,7 +85,7 @@ def metrics(request):
     })
 
 
-
+@login_required(login_url='/users/login/')  
 def board(request):
     tickets = Ticket.objects.all()
     priority_counts = count_priorities()  # Get counts and percentages

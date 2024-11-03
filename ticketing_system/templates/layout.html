@@ -216,9 +216,12 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/users/tasks/">
-                              My Tasks
-                            </a>
+                            <form method="post" action="/users/logout/">
+                                {% csrf_token %}
+                                <button class="dropdown-item text-danger" arial-label="User Logout" titl="User Logout" >
+                                    <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span>Logout</span>
+                                </button>
+                            </form>
                         </li>
                         {% endif %}
                     

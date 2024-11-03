@@ -48,7 +48,7 @@ def login_view(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)
-        return redirect("/")
+        return redirect("/dashboard/")
     
 @login_required(login_url='/users/login/')
 def profile_view(request):
